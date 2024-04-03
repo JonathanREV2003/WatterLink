@@ -18,7 +18,7 @@ body{
 
 .container{
     padding: 20px 70px;
-    color: white;
+    color: black;
 }
 
 .current-info{
@@ -62,7 +62,7 @@ body{
 .current-info .others{
     display: flex;
     flex-direction: column;
-    background: rgba(24, 24, 27, 0.6);
+    background: rgba(249, 199, 168, 0.6);
     padding: 20px;
     border-radius: 10px;
     margin: 10px 0; 
@@ -127,6 +127,14 @@ body{
     text-align: center;
 }
 
+
+#openweathermap-widget-11{
+position: fixed; /* Posición fija para que el widget se mantenga en su lugar */
+  top: 20px; /* Ajusta la distancia desde la parte superior según tus preferencias */
+  right: 20px; /* Ajusta la distancia desde el lado derecho según tus preferencias */
+  z-index: 9999; 
+}
+
 .weather-forecast .weather-forecast-item .temp{
     font-weight: 100;
 }
@@ -177,5 +185,3 @@ body{
     }
 
 }
-
-
