@@ -21,18 +21,7 @@
                 </div>
 
                 <div class="others" id="current-weather">
-                    <div class="weather-item">
-                        <div>Humidity</div>
-                        <div>95.2%</div>
-                    </div>
-                    <div class="weather-item">
-                        <div>Pressure</div>
-                        <div>100</div>
-                    </div>
-                    <div class="weather-item">
-                        <div>Wind Speed</div>
-                        <div>200</div>
-                    </div>
+                    
                 </div>
             </div>
 
@@ -87,8 +76,35 @@
                 </div>
             </div>
         </div>
+        
     </div>
     <script src="script.js"></script>
+
+    <div id="widget">
+    <div id="openweathermap-widget-11"></div>
+    </div>
+    <script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
+    <script>
+        // Retrasar la ejecución del script del widget por 5 segundos (5000 milisegundos)
+        setTimeout(function() {
+          window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  
+          window.myWidgetParam.push({
+            id: 11,
+            cityid: window.cityid, // Usa la variable global cityid
+            appid: '25605eeaf7df6c2d5a8730e69040524c',
+            units: 'metric',
+            containerid: 'openweathermap-widget-11',
+          });  
+          (function() {
+            var script = document.createElement('script');
+            script.async = true;
+            script.charset = "utf-8";
+            script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(script, s);  
+          })();
+        }, 3000); // 3000 milisegundos = 3 segundos
+        </script>
 </body>
 
 </html>
