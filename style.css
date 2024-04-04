@@ -115,7 +115,7 @@ body {
     color: white;
 }
 
-.formulario input[type="button"] {
+.formulario input[class="button"] {
     width: 60%;
     margin: auto;
     border: solid thin white;
