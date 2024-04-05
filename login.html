@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="loginStyle.css">
     <script type="module" src="firebaseconect.js"></script>
     <script type="module" src="login.js"></script>
-    <script type="module" src="signup.js"></script>
+    <script type="module" src="singup.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -42,8 +42,8 @@
             </div>
             <p class="cuenta-gratis">Crear una cuenta gratis</p>
             <input type="text" placeholder="Nombre">
-            <input type="email" placeholder="Email">
-            <input type="password" placeholder="Contraseña">
+            <input type="email" id="email" placeholder="Email">
+            <input type="password" id="password" placeholder="Contraseña">
             <input type= "submit" class="button" value="Registrarse">
         </form>
     </div>
@@ -65,8 +65,8 @@
                 </div>
             </div>
             <p class="cuenta-gratis">¿Aun no tienes una cuenta?</p>
-            <input type="email" placeholder="Email">
-            <input type="password" placeholder="Contraseña">
+            <input type="email" id="email1" placeholder="Email">
+            <input type="password" id="password1" placeholder="Contraseña">
             <input type="submit" class="button" value="Iniciar Sesion">
         </form>
         <div class="welcome-back">
@@ -77,7 +77,7 @@
             </div>
         </div>
     </div>
-    <script src="script.js"></script>
+    <script src="loginScrip.js"></script>
 </body>
 </html>
 

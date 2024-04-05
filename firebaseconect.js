@@ -22,7 +22,7 @@ export class ManageAccount {
   register(email, password) {
     createUserWithEmailAndPassword(auth, email, password)
       .then((_) => {
-        window.location.href = "index.html";
+        window.location.href = "login.html";
         
         alert("Registro exitoso. Serás redirigido a la página de inicio de sesión.");
       })
@@ -36,7 +36,7 @@ export class ManageAccount {
   authenticate(email, password) {
     signInWithEmailAndPassword(auth, email, password)
       .then((_) => {
-        window.location.href = "index.html";
+        window.location.href = "login.html";
 
         alert("Has iniciado sesión correctamente. Serás redirigido a la página principal.");
       })
@@ -50,7 +50,7 @@ export class ManageAccount {
   signOut() {
     signOut(auth)
       .then((_) => {
-        window.location.href = "index.html";
+        window.location.href = "login.html";
       })
       .catch((error) => {
         console.error(error.message);
