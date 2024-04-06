@@ -185,3 +185,46 @@ position: fixed; /* Posición fija para que el widget se mantenga en su lugar */
     }
 
 }
+.air-pollution-panel {
+    position: flex;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    width: 300px;
+    max-height: 200px;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+  }
+  
+  .panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
+  
+  .toggle-button {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .panel-content {
+    padding: 10px;
+    overflow-y: auto;
+    max-height: 0;
+    transition: max-height 0.3s ease-in-out;
+  }
+  
+  .air-pollution-panel.open .panel-content {
+    max-height: 150px;
+  }
+  
+  .air-pollution-panel.open .toggle-button {
+    transform: rotate(45deg);
+  }
