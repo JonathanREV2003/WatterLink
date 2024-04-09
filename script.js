@@ -1,4 +1,3 @@
-
 const timeElement = document.getElementById('time');
 const dateElement = document.getElementById('date');
 const currentWeatherItemsElement = document.getElementById('current-weather');
@@ -74,4 +73,55 @@ function showWeatherData(dataActual) {
     </div>
   `;
 }
+
+function getAirPollutionData(latitude, longitude) {
+  const apiUrl = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`;
+
+  fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+      
+      console.log(data);
+      
+    })
+    .catch(error => {
+      console.error('Error al obtener los datos de contaminación del aire:', error);
+    });
+}
+
+function getAirPollutionData(latitude, longitude) {
+  const apiUrl = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`;
+
+  fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+      const airPollutionDataElement = document.getElementById('air-pollution-data');
+      airPollutionDataElement.innerHTML = `
+        <p>Índice de calidad del aire: ${data.list[0].main.aqi}</p>
+        <p>Componentes:</p>
+        <ul>
+          <li>CO: ${data.list[0].components.co} μg/m<sup>3</sup></li>
+          <li>NO: ${data.list[0].components.no} μg/m<sup>3</sup></li>
+          <li>NO<sub>2</sub>: ${data.list[0].components.no2} μg/m<sup>3</sup></li>
+          <li>O<sub>3</sub>: ${data.list[0].components.o3} μg/m<sup>3</sup></li>
+          <li>SO<sub>2</sub>: ${data.list[0].components.so2} μg/m<sup>3</sup></li>
+          <li>PM<sub>2.5</sub>: ${data.list[0].components.pm2_5} μg/m<sup>3</sup></li>
+          <li>PM<sub>10</sub>: ${data.list[0].components.pm10} μg/m<sup>3</sup></li>
+          <li>NH<sub>3</sub>: ${data.list[0].components.nh3} μg/m<sup>3</sup></li>
+        </ul>
+      `;
+    })
+    .catch(error => {
+      console.error('Error al obtener los datos de contaminación del aire:', error);
+    });
+}
+const airPollutionPanel = document.querySelector('.air-pollution-panel');
+const toggleButton = document.querySelector('.toggle-button');
+const panelContent = document.querySelector('.panel-content');
+
+toggleButton.addEventListener('click', () => {
+  airPollutionPanel.classList.toggle('open');
+});
+
+
 
