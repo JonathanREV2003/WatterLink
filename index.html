@@ -11,17 +11,13 @@
 <body>
     <div class="container">
         <div class="current-info">
-
             <div class="date-container">
                 <div class="time" id="time">
-                    12:30 <span id="am-pm">PM</span>
+                <span id="am-pm"></span>
                 </div>
                 <div class="date" id="date">
-                    Monday,24 May
                 </div>
-
                 <div class="others" id="current-weather">
-                    
                 </div>
             </div>
 
@@ -45,7 +41,7 @@
 
     <div class="future-forecast">
         <div class="today" id="current-temp">
-            <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon">
+            <img src="" alt="weather icon" class="w-icon">
             <div class="other">
                 <div class="day">Monday</div>
                 <div class="temp">Night -25°</div>
@@ -88,32 +84,33 @@
         
     </div>
     <script src="script.js"></script>
-
+        <!-- 
     <div id="widget">
-    <div id="openweathermap-widget-11"></div>
-    </div>
-    <script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
-    <script>
-        // Retrasar la ejecución del script del widget por 5 segundos (5000 milisegundos)
-        setTimeout(function() {
-          window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  
-          window.myWidgetParam.push({
-            id: 11,
-            cityid: window.cityid, // Usa la variable global cityid
-            appid: '25605eeaf7df6c2d5a8730e69040524c',
-            units: 'metric',
-            containerid: 'openweathermap-widget-11',
-          });  
-          (function() {
-            var script = document.createElement('script');
-            script.async = true;
-            script.charset = "utf-8";
-            script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(script, s);  
-          })();
-        }, 3000); // 3000 milisegundos = 3 segundos
-        </script>
+        <div id="openweathermap-widget-11"></div>
+        </div>
+        <script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
+        <script>
+            // Retrasar la ejecución del script del widget por 5 segundos (5000 milisegundos)
+            setTimeout(function() {
+              window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  
+              window.myWidgetParam.push({
+                id: 11,
+                cityid: window.cityid, // Usa la variable global cityid
+                appid: '25605eeaf7df6c2d5a8730e69040524c',
+                units: 'metric',
+                containerid: 'openweathermap-widget-11',
+              });  
+              (function() {
+                var script = document.createElement('script');
+                script.async = true;
+                script.charset = "utf-8";
+                script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(script, s);  
+              })();
+            }, 3000); // 3000 milisegundos = 3 segundos
+            </script>
+        -->
 </body>
 
 </html>

@@ -7,6 +7,7 @@ const weatherForecastElement = document.getElementById('weather-forecast');
 const currentTempElement = document.getElementById('current-temp');
 
 var cityid;
+var iconid;
 
 const days =['Sunday', 'Monday', 'Tuesday','Wednesday','Friday','Thursday',
 'Friday','Saturday']
@@ -15,6 +16,7 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug',
 
 const API_KEY = '664f855485a79428ecf25f52fc7f6709'
 //Posible Obtención del id de la cuidad: https://api.openweathermap.org/data/2.5/weather?q=London
+// https://api.openweathermap.org/data/2.5/find?q=Chile&appid=664f855485a79428ecf25f52fc7f6709
 function formatMinutes(minutes) {
   return minutes < 10 ? `0${minutes}` : minutes;
 }
@@ -46,7 +48,9 @@ function getWeatherData(){
 
           console.log(dataActual)
           cityid = dataActual.id;
+          iconid = dataActual.weather[0].icon
           console.log(cityid)
+          console.log(iconid)
           showWeatherData(dataActual);
           getAirPollutionData(latitude, longitude); 
         })
@@ -55,38 +59,45 @@ function getWeatherData(){
 }
 
 function showWeatherData(dataActual) {
+  document.querySelector('.w-icon').src = `https://openweathermap.org/img/wn/${iconid}@2x.png`;
+
   var humidity = dataActual.main.humidity;
-  var pressure = dataActual.main.pressure;
+  var temparature = dataActual.main.temp;
+  var temparatureMax = dataActual.main.temp_max;
+  var temparatureMin = dataActual.main.temp_min;
   var wind_Speed = dataActual.wind.speed;
-  currentWeatherItemsElement.innerHTML = `
-    <div class="weather-item">
-      <div>Humidity</div>
-      <div>${humidity}</div>
+  var clouds = dataActual.weather[0].description
+  currentWeatherItemsElement.innerHTML = `    
+    <div class="weather-item1">
+    <img src="https://openweathermap.org/img/wn/${iconid}@2x.png" alt="weather icon" class="w-icon2">
     </div>
     <div class="weather-item">
-      <div>Pressure</div>
-      <div>${pressure}</div>
+      <div>Description</div>
+      <div>${clouds}</div>
+    </div>
+    <div class="weather-item">
+      <div>Temperature</div>
+      <div>${temparature}</div>
+    </div>
+    <div class="weather-item">
+      <div>Max</div>
+      <div>${temparatureMax}</div>
+    </div>
+    <div class="weather-item">
+      <div>Min</div>
+      <div>${temparatureMin}</div>
+    </div>
     </div>
     <div class="weather-item">
       <div>Wind Speed</div>
-      <div>${wind_Speed}</div>
+      <div>${wind_Speed} m/s</div>
+    </div>
+    </div>
+    <div class="weather-item">
+      <div>Humidity</div>
+      <div>${humidity}%</div>
     </div>
   `;
-}
-
-function getAirPollutionData(latitude, longitude) {
-  const apiUrl = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`;
-
-  fetch(apiUrl)
-    .then(response => response.json())
-    .then(data => {
-      
-      console.log(data);
-      
-    })
-    .catch(error => {
-      console.error('Error al obtener los datos de contaminación del aire:', error);
-    });
 }
 
 function getAirPollutionData(latitude, longitude) {

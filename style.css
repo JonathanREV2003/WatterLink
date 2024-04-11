@@ -73,6 +73,11 @@ body{
     display: flex;
     justify-content: space-between;
 }
+.current-info .others .weather-item1{
+    margin-top: -10%;
+    display: flex;
+    justify-content: center;
+}
 
 .future-forecast{
     background: rgba(24, 24, 27, 0.8);
