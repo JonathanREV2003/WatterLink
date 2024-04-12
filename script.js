@@ -107,8 +107,31 @@ function getAirPollutionData(latitude, longitude) {
     .then(response => response.json())
     .then(data => {
       const airPollutionDataElement = document.getElementById('air-pollution-data');
+      const airQualityIndex = data.list[0].main.aqi;
+      let airQualityDescription;
+
+      switch (airQualityIndex) {
+        case 1:
+          airQualityDescription = 'Good';
+          break;
+        case 2:
+          airQualityDescription = 'Fair';
+          break;
+        case 3:
+          airQualityDescription = 'Moderate';
+          break;
+        case 4:
+          airQualityDescription = 'Poor';
+          break;
+        case 5:
+          airQualityDescription = 'Very Poor';
+          break;
+        default:
+          airQualityDescription = 'Unknown';
+      }
+
       airPollutionDataElement.innerHTML = `
-        <p>Índice de calidad del aire: ${data.list[0].main.aqi}</p>
+        <p>Índice de calidad del aire: ${airQualityIndex} (${airQualityDescription})</p>
         <p>Componentes:</p>
         <ul>
           <li>CO: ${data.list[0].components.co} μg/m<sup>3</sup></li>
