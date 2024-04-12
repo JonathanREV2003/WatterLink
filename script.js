@@ -9,14 +9,17 @@ const currentTempElement = document.getElementById('current-temp');
 var cityid;
 var iconid;
 
-const days =['Sunday', 'Monday', 'Tuesday','Wednesday','Friday','Thursday',
-'Friday','Saturday']
+const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 
 'Sep', 'Oct', 'Nov', 'Dec'];
 
 const API_KEY = '664f855485a79428ecf25f52fc7f6709'
 //Posible Obtención del id de la cuidad: https://api.openweathermap.org/data/2.5/weather?q=London
 // https://api.openweathermap.org/data/2.5/find?q=Chile&appid=664f855485a79428ecf25f52fc7f6709
+// https://api.openweathermap.org/data/2.5/find?q=Sansare&appid=664f855485a79428ecf25f52fc7f6709
+// https://api.openweathermap.org/geo/1.0/direct?q=Villa%20Nueva,GT&limit=1&appid=664f855485a79428ecf25f52fc7f6709
+// https://api.openweathermap.org/data/2.5/weather?q=Toronto&appid=664f855485a79428ecf25f52fc7f6709
+// https://api.openweathermap.org/data/2.5/weather?q=Jalapa,%20GT&appid=664f855485a79428ecf25f52fc7f6709
 function formatMinutes(minutes) {
   return minutes < 10 ? `0${minutes}` : minutes;
 }
@@ -36,12 +39,15 @@ setInterval(() => {
   dateElement.innerHTML = days[day] + ', '+ date + ' ' + months[month]
 }, 1000);
 
+let latitude, longitude;
+
 getWeatherData()
 function getWeatherData(){
-    navigator.geolocation.getCurrentPosition((succes) =>{
-        console.log(succes);
+    navigator.geolocation.getCurrentPosition((success) =>{
+        console.log(success);
 
-        let{latitude, longitude} =succes.coords;
+        latitude = success.coords.latitude;
+        longitude = success.coords.longitude;
 
         fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`).
         then(res => res.json()).then(dataActual => {
@@ -53,30 +59,40 @@ function getWeatherData(){
           console.log(iconid)
           showWeatherData(dataActual);
           getAirPollutionData(latitude, longitude); 
+
+          getWeatherDataForecast();
         })
     })
     
 }
+function getWeatherDataForecast(){
+  fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`).
+  then(res => res.json()).then(dataForecast => {
+
+    console.log(dataForecast)
+    showWeatherDataForecast(dataForecast);
+  })
+}
 
 function showWeatherData(dataActual) {
   document.querySelector('.w-icon').src = `https://openweathermap.org/img/wn/${iconid}@2x.png`;
-
-  var humidity = dataActual.main.humidity;
-  var temparature = dataActual.main.temp;
+  var temparature = dataActual.main.feels_like;
   var temparatureMax = dataActual.main.temp_max;
   var temparatureMin = dataActual.main.temp_min;
   var wind_Speed = dataActual.wind.speed;
-  var clouds = dataActual.weather[0].description
+  var clouds = dataActual.weather[0].description;
+  var sunrise = dataActual.sys.sunrise;
+  var sunset = dataActual.sys.sunset;
   currentWeatherItemsElement.innerHTML = `    
     <div class="weather-item1">
     <img src="https://openweathermap.org/img/wn/${iconid}@2x.png" alt="weather icon" class="w-icon2">
     </div>
     <div class="weather-item">
       <div>Description</div>
-      <div>${clouds}</div>
+      <div>&nbsp;&nbsp;${clouds}</div>
     </div>
     <div class="weather-item">
-      <div>Temperature</div>
+      <div>Feels Like</div>
       <div>${temparature}</div>
     </div>
     <div class="weather-item">
@@ -94,11 +110,41 @@ function showWeatherData(dataActual) {
     </div>
     </div>
     <div class="weather-item">
-      <div>Humidity</div>
-      <div>${humidity}%</div>
+      <div>Sunrise</div>
+      <div>${window.moment(sunrise * 1000).format('HH:mm a')}</div>
+    </div>
+    <div class="weather-item">
+      <div>Sunset</div>
+      <div>${window.moment(sunset * 1000).format('HH:mm a')}</div>
     </div>
   `;
 }
+
+function showWeatherDataForecast(dataForecast) {
+  let otherDayForcast = ''
+  dataForecast.list.forEach((list, idx) => {
+  
+    let time = list.dt_txt.split(' ')[1]; // Divide el string de fecha y hora y selecciona solo la parte de la hora
+    let time1 = list.dt_txt.split(' ')[0];
+
+    otherDayForcast += `
+    <div class="weather-forecast" id="weather-forecast">
+    <div class="weather-forecast-item">
+        <div class="day">${window.moment.utc(list.dt * 1000).format('ddd')}</div>
+        <div class="temp">${time1}</div> <!-- Muestra solo la hora -->
+        <div class="temp">Time - ${time}</div> 
+        <img src="https://openweathermap.org/img/wn/${list.weather[0].icon}.png" alt="weather icon" class="w-icon">
+        <div class="temp">Feels Like - ${list.main.feels_like}</div>
+        <div class="temp">Max - ${list.main.temp_max}</div>
+        <div class="temp">Min - ${list.main.temp_min}</div>
+    </div>
+</div>
+    `
+  })
+
+  weatherForecastElement.innerHTML = otherDayForcast;
+}
+
 
 function getAirPollutionData(latitude, longitude) {
   const apiUrl = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`;
