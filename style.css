@@ -74,8 +74,8 @@ body{
     justify-content: space-between;
 }
 .current-info .others .weather-item1{
-    margin-top: -20%;
-    margin-bottom: -10%;
+    margin-top: -25%;
+    margin-bottom: -15%;
     display: flex;
     justify-content: center;
 }
@@ -125,6 +125,7 @@ body{
     border-radius: 10px;
     padding: 15px;
     width: 160px;
+    height: 255px;
 }
 
 .weather-forecast .weather-forecast-item .day{

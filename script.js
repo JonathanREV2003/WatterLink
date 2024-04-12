@@ -134,6 +134,7 @@ function showWeatherDataForecast(dataForecast) {
         <div class="temp">${time1}</div> <!-- Muestra solo la hora -->
         <div class="temp">Time - ${time}</div> 
         <img src="https://openweathermap.org/img/wn/${list.weather[0].icon}.png" alt="weather icon" class="w-icon">
+        <div class="temp">${list.weather[0].description}</div> 
         <div class="temp">Feels Like - ${list.main.feels_like}</div>
         <div class="temp">Max - ${list.main.temp_max}</div>
         <div class="temp">Min - ${list.main.temp_min}</div>
