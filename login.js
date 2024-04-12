@@ -1,4 +1,3 @@
-
 import { ManageAccount } from './firebaseconect.js';
 
 document.getElementById("formulario-sesion").addEventListener("submit", (event) => {
@@ -8,8 +7,15 @@ document.getElementById("formulario-sesion").addEventListener("submit", (event) 
   const password = document.getElementById("password1").value;
 
   const account = new ManageAccount();
-  account.authenticate(email, password);
-  
+  account.authenticate(email, password)
+         .then(() => {
+             // Redirigir al usuario a la página de información meteorológica
+             window.location.href = "index.html";
+         })
+         .catch(error => {
+             // Manejar errores de autenticación
+             console.error('Error de autenticación:', error);
+         });
 });
 
 console.log('Formulario de Inicio de Sesión');
