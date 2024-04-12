@@ -74,7 +74,8 @@ body{
     justify-content: space-between;
 }
 .current-info .others .weather-item1{
-    margin-top: -10%;
+    margin-top: -20%;
+    margin-bottom: -10%;
     display: flex;
     justify-content: center;
 }
@@ -123,6 +124,7 @@ body{
     border: 1px solid #eee;
     border-radius: 10px;
     padding: 15px;
+    width: 160px;
 }
 
 .weather-forecast .weather-forecast-item .day{
@@ -189,6 +191,14 @@ position: fixed; /* Posición fija para que el widget se mantenga en su lugar */
         font-size: 14px;
     }
 
+}
+
+@media only screen and (max-width: 10000px){
+    .future-forecast{
+        justify-content: start;
+        align-items: none;
+        overflow-y: scroll;
+    }
 }
 .air-pollution-panel {
     position: flex;
