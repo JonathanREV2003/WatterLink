@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Weather Link</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="current-info">
+            <div class="date-container">
+                <div class="time" id="time">
+                <span id="am-pm"></span>
+                </div>
+                <div class="date" id="date">
+                </div>
+                <div class="others" id="current-weather">
+                </div>
+            </div>
+
+            <div class="place-container">
+                <div class="time-zone" id="time-zone">America/Guatemala</div>
+                <div id="country" class="country">IN</div>
+            </div>
+        </div>  
+        
+        <!-- Trabajar-->
+        <div class="air-pollution-panel">
+            <div class="panel-header">
+              <h3>Calidad del aire</h3>
+              <button class="toggle-button">+</button>
+            </div>
+            <div class="panel-content" id="air-pollution-data"></div>
+          </div>   
+    </div>
+     </div>
+        
+
+
+
+    <div class="future-forecast">
+        <div class="today" id="current-temp">
+            <img src="" alt="weather icon" class="w-icon">
+            <div class="other">
+                <div class="day">Monday</div>
+                <div class="temp">Night -25°</div>
+                <div class="temp">Day -30°</div>
+            </div>
+        </div>
+
+        <div class="weather-forecast" id="weather-forecast">
+            <div class="weather-forecast-item">
+                <div class="day">Sunday</div>
+                <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon">
+                <div class="temp">Night -25°</div>
+                <div class="temp">Day -30°</div>
+            </div>
+            <div class="weather-forecast" id="weather-forecast">
+                <div class="weather-forecast-item">
+                    <div class="day">Tuesday</div>
+                    <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon">
+                    <div class="temp">Night -25°</div>
+                    <div class="temp">Day -30°</div>
+                </div>
+            </div>
+            <div class="weather-forecast" id="weather-forecast">
+                <div class="weather-forecast-item">
+                    <div class="day">Wednesday</div>
+                    <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon">
+                    <div class="temp">Night -25°</div>
+                    <div class="temp">Day -30°</div>
+                </div>
+            </div>
+            <div class="weather-forecast" id="weather-forecast">
+                <div class="weather-forecast-item">
+                    <div class="day">Friday</div>
+                    <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon">
+                    <div class="temp">Night -25°</div>
+                    <div class="temp">Day -30°</div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>   
+     <script src="script.js"></script>
+        <!-- 
+    <div id="widget">
+        <div id="openweathermap-widget-11"></div>
+        </div>
+        <script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
+        <script>
+            // Retrasar la ejecución del script del widget por 5 segundos (5000 milisegundos)
+            setTimeout(function() {
+              window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  
+              window.myWidgetParam.push({
+                id: 11,
+                cityid: window.cityid, // Usa la variable global cityid
+                appid: '25605eeaf7df6c2d5a8730e69040524c',
+                units: 'metric',
+                containerid: 'openweathermap-widget-11',
+              });  
+              (function() {
+                var script = document.createElement('script');
+                script.async = true;
+                script.charset = "utf-8";
+                script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(script, s);  
+              })();
+            }, 3000); // 3000 milisegundos = 3 segundos
+            </script>
+        -->
+</body>
+    
+</html>
