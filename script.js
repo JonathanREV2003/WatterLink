@@ -121,18 +121,24 @@ function showWeatherData(dataActual) {
 }
 
 function showWeatherDataForecast(dataForecast) {
-  let otherDayForcast = ''
-  dataForecast.list.forEach((list, idx) => {
+  var sunrise1 = dataForecast.city.sunrise
+  var sunset1 = dataForecast.city.sunset
+  console.log(window.moment(sunrise1 * 1000).format('HH:mm a'))
+  console.log(window.moment(sunset1 * 1000).format('HH:mm a'))
   
+  let otherDayForcast = ''
+  dataForecast.list.forEach((list) => {
+    console.log(moment.unix(1713042000).format('YYYY-MM-DD hh:mm:ss'));
     let time = list.dt_txt.split(' ')[1]; // Divide el string de fecha y hora y selecciona solo la parte de la hora
     let time1 = list.dt_txt.split(' ')[0];
+
 
     otherDayForcast += `
     <div class="weather-forecast" id="weather-forecast">
     <div class="weather-forecast-item">
-        <div class="day">${window.moment.utc(list.dt * 1000).format('ddd')}</div>
-        <div class="temp">${time1}</div> <!-- Muestra solo la hora -->
-        <div class="temp">Time - ${time}</div> 
+        <div class="day">${window.moment(list.dt * 1000).format('dddd')}</div>
+        <div class="temp">${window.moment(list.dt * 1000).format('YYYY-MM-DD')}</div>
+        <div class="temp">${window.moment.unix(list.dt).format('HH:mm:ss A')}</div> <!-- Muestra solo la hora -->
         <img src="https://openweathermap.org/img/wn/${list.weather[0].icon}.png" alt="weather icon" class="w-icon">
         <div class="temp">${list.weather[0].description}</div> 
         <div class="temp">Feels Like - ${list.main.feels_like}</div>
