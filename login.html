@@ -3,81 +3,117 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="loginStyle.css">
-    <script type="module" src="firebaseconect.js"></script>
-    <script type="module" src="login.js"></script>
-    <script type="module" src="singup.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-    <title>WATER LINK</title>
-    <!--Login-->
+    <link rel="stylesheet" href="style.css">
+    <title>Weather Link</title>
 </head>
 
 <body>
-    <!--Inicio de sesion-->
-    <div class="container-form sign-up">
-        <div class="welcome-back">
-            <div class="message">
-                <h2>Bienvenido a Water Link</h2>
-                <p>Si ya tienes una cuenta por favor inicia sesion aquí</p>
-                <button class="sign-up-btn">Iniciar Sesion</button>
+    <div class="container">
+        <div class="current-info">
+            <div class="date-container">
+                <div class="time" id="time">
+                <span id="am-pm"></span>
+                </div>
+                <div class="date" id="date">
+                </div>
+                <div class="others" id="current-weather">
+                </div>
+            </div>
+
+            <div class="place-container">
+                <div class="time-zone" id="time-zone">America/Guatemala</div>
+                <div id="country" class="country">IN</div>
+            </div>
+        </div>  
+        
+        <!-- Trabajar-->
+        <div class="air-pollution-panel">
+            <div class="panel-header">
+              <h3>Calidad del aire</h3>
+              <button class="toggle-button">+</button>
+            </div>
+            <div class="panel-content" id="air-pollution-data"></div>
+          </div>   
+    </div>
+     </div>
+        
+
+
+
+    <div class="future-forecast">
+        <div class="today" id="current-temp">
+            <img src="" alt="weather icon" class="w-icon">
+            <div class="other">
+                <div class="day">Monday</div>
+                <div class="temp">Night -25°</div>
+                <div class="temp">Day -30°</div>
             </div>
         </div>
-        <form class="formulario" id="formulario-crear">
-            <h2 class="create-account">Crear una cuenta</h2>
-            <div class="iconos">
-                <div class="border-icon">
-                    <i class='bx bxl-instagram'></i>
-                </div>
-                <div class="border-icon">
-                    <i class='bx bxl-linkedin' ></i>
-                </div>
-                <div class="border-icon">
-                    <i class='bx bxl-facebook-circle' ></i>
+
+        <div class="weather-forecast" id="weather-forecast">
+            <div class="weather-forecast-item">
+                <div class="day">Sunday</div>
+                <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon">
+                <div class="temp">Night -25°</div>
+                <div class="temp">Day -30°</div>
+            </div>
+            <div class="weather-forecast" id="weather-forecast">
+                <div class="weather-forecast-item">
+                    <div class="day">Tuesday</div>
+                    <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon">
+                    <div class="temp">Night -25°</div>
+                    <div class="temp">Day -30°</div>
                 </div>
             </div>
-            <p class="cuenta-gratis">Crear una cuenta gratis</p>
-            <input type="text" placeholder="Nombre">
-            <input type="email" id="email" placeholder="Email">
-            <input type="password" id="password" placeholder="Contraseña">
-            <input type= "submit" class="button" value="Registrarse">
-        </form>
-    </div>
-
-    <!--Registrarse-->
-
-    <div class="container-form sign-in">
-        <form class="formulario"  id="formulario-sesion">
-            <h2 class="create-account">Iniciar Sesion</h2>
-            <div class="iconos">
-                <div class="border-icon">
-                    <i class='bx bxl-instagram'></i>
-                </div>
-                <div class="border-icon">
-                    <i class='bx bxl-linkedin' ></i>
-                </div>
-                <div class="border-icon">
-                    <i class='bx bxl-facebook-circle' ></i>
+            <div class="weather-forecast" id="weather-forecast">
+                <div class="weather-forecast-item">
+                    <div class="day">Wednesday</div>
+                    <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon">
+                    <div class="temp">Night -25°</div>
+                    <div class="temp">Day -30°</div>
                 </div>
             </div>
-            <p class="cuenta-gratis">¿Aun no tienes una cuenta?</p>
-            <input type="email" id="email1" placeholder="Email">
-            <input type="password" id="password1" placeholder="Contraseña">
-            <input type="submit" class="button" value="INICIAR">
-        </form>
-        <div class="welcome-back">
-            <div class="message">
-                <h2>Bienvenido de nuevo</h2>
-                <p>Si aun no tienes una cuenta por favor registrete aquí</p>
-                <button class="sign-in-btn">Registrarse</button>
+            <div class="weather-forecast" id="weather-forecast">
+                <div class="weather-forecast-item">
+                    <div class="day">Friday</div>
+                    <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon">
+                    <div class="temp">Night -25°</div>
+                    <div class="temp">Day -30°</div>
+                </div>
             </div>
         </div>
+        
     </div>
-    <script src="loginScrip.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>   
+     <script src="script.js"></script>
+        <!-- 
+    <div id="widget">
+        <div id="openweathermap-widget-11"></div>
+        </div>
+        <script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
+        <script>
+            // Retrasar la ejecución del script del widget por 5 segundos (5000 milisegundos)
+            setTimeout(function() {
+              window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  
+              window.myWidgetParam.push({
+                id: 11,
+                cityid: window.cityid, // Usa la variable global cityid
+                appid: '25605eeaf7df6c2d5a8730e69040524c',
+                units: 'metric',
+                containerid: 'openweathermap-widget-11',
+              });  
+              (function() {
+                var script = document.createElement('script');
+                script.async = true;
+                script.charset = "utf-8";
+                script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(script, s);  
+              })();
+            }, 3000); // 3000 milisegundos = 3 segundos
+            </script>
+        -->
 </body>
+    
 </html>
-

@@ -10,7 +10,7 @@ document.getElementById("formulario-sesion").addEventListener("submit", (event) 
   account.authenticate(email, password)
          .then(() => {
              // Redirigir al usuario a la página de información meteorológica
-             window.location.href = "index.html";
+             window.location.href = "login.html";
          })
          .catch(error => {
              // Manejar errores de autenticación

@@ -36,7 +36,7 @@ export class ManageAccount {
   authenticate(email, password) {
     signInWithEmailAndPassword(auth, email, password)
       .then((_) => {
-        window.location.href = "index.html";
+        window.location.href = "login.html";
 
         alert("Has iniciado sesión correctamente. Serás redirigido a la página principal.");
       })
