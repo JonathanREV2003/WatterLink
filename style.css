@@ -74,15 +74,15 @@ body{
     justify-content: space-between;
 }
 .current-info .others .weather-item1{
-    margin-top: -25%;
-    margin-bottom: -15%;
+    margin-top: -35px;
+    margin-bottom: -20px;
     display: flex;
     justify-content: center;
 }
 
 .future-forecast{
     background: rgba(24, 24, 27, 0.8);
-    padding: 25px;
+    padding: 15px;
     position: fixed;
     bottom: 0;
     display: flex;
@@ -124,7 +124,7 @@ body{
     border: 1px solid #eee;
     border-radius: 10px;
     padding: 15px;
-    width: 160px;
+    width: 170px;
     height: 255px;
 }
 
@@ -194,13 +194,6 @@ position: fixed; /* Posición fija para que el widget se mantenga en su lugar */
 
 }
 
-@media only screen and (max-width: 10000px){
-    .future-forecast{
-        justify-content: start;
-        align-items: none;
-        overflow-y: scroll;
-    }
-}
 .air-pollution-panel {
     position: flex;
     bottom: 20px;
@@ -244,3 +237,11 @@ position: fixed; /* Posición fija para que el widget se mantenga en su lugar */
   .air-pollution-panel.open .toggle-button {
     transform: rotate(45deg);
   }
+
+  @media only screen and (max-width: 1400px){
+    .future-forecast{
+        justify-content: start;
+        align-items: none;
+        overflow-x: scroll;
+    }
+}
