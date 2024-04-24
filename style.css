@@ -25,6 +25,7 @@ body{
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    align-items: flex-start; /* Alinear elementos al principio */
 }
 
 .date-container{
@@ -195,16 +196,11 @@ position: fixed; /* Posición fija para que el widget se mantenga en su lugar */
 }
 
 .air-pollution-panel {
-    position: flex;
-    bottom: 20px;
-    right: 20px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    width: 300px;
-    max-height: 200px;
-    overflow: hidden;
-    transition: max-height 0.3s ease-in-out;
+    margin-left: 20px; /* Agrega separación entre place-container y air-pollution-panel */
+    background-color: rgba(249, 199, 168, 0.6); 
+    border: 2px solid #eee; /* Mismo borde que place-container */
+    border-radius: 10px; /* Mismo radioo  que place-container */
+    padding: 10px; /* Agrega un poco de espaciado interno */
   }
   
   .panel-header {

@@ -154,22 +154,22 @@ function getAirPollutionData(latitude, longitude) {
 
       switch (airQualityIndex) {
         case 1:
-          airQualityDescription = 'Good';
+          airQualityDescription = 'Buena';
           break;
         case 2:
-          airQualityDescription = 'Fair';
+          airQualityDescription = 'Justa';
           break;
         case 3:
-          airQualityDescription = 'Moderate';
+          airQualityDescription = 'Moderada';
           break;
         case 4:
-          airQualityDescription = 'Poor';
+          airQualityDescription = 'Pobre';
           break;
         case 5:
-          airQualityDescription = 'Very Poor';
+          airQualityDescription = 'Muy pobre';
           break;
         default:
-          airQualityDescription = 'Unknown';
+          airQualityDescription = 'Desconocida';
       }
 
       airPollutionDataElement.innerHTML = `
