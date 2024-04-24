@@ -1,118 +1,17 @@
 <html>
 
 <head>
+  <link rel="stylesheet" href="map.css">
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
   <title>WebTileLayer - 4.5</title>
-  <style>
-    html,
-    body,
-    #viewDiv {
-      padding: 0;
-      margin: 0;
-      height: 100%;
-      width: 100%;
-    }
-
-    .leaflet-control {
-      position: relative;
-      z-index: 7;
-      pointer-events: auto
-    }
-
-    .leaflet-control {
-      float: left;
-      clear: both
-    }
-
-    .leaflet-right .leaflet-control {
-      float: right
-    }
-
-    .leaflet-bottom .leaflet-control {
-      margin-bottom: 10px
-    }
-
-    .leaflet-right .leaflet-control {
-      margin-right: 10px
-    }
-    
-  </style>
   <link rel="stylesheet" href="http://js.arcgis.com/4.29/esri/css/main.css">
-  <script src="https://js.arcgis.com/4.29/"></script>
-  <script>
-
-    require([
-    "esri/config",
-    "esri/layers/WebTileLayer",
-    "esri/Map",
-    "esri/views/MapView",
-    "esri/Graphic",
-    "esri/PopupTemplate",
-    "esri/rest/locator"
-    ], (esriConfig, WebTileLayer, Map, MapView, Graphic, PopupTemplate, locator) => {
-        esriConfig.request.corsEnabledServers
-        var tiledLayer;
-        const locatorUrl = "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer";
-        
-        var map = new Map({
-        basemap: "dark-gray",
-        wrapAround: false,
-        worldCopyJump: true,
-      });
-
-      var view = new MapView({
-        container: "viewDiv",
-        map: map,
-        wrapAround: false,
-        zoom:1.5,
-      });
-
-    tiledLayer = new WebTileLayer({
-        urlTemplate: "http://maps.openweathermap.org/maps/2.0/weather/TA2/{level}/{col}/{row}?date=1713578802&opacity=0.3&fill_bound=true&appid=664f855485a79428ecf25f52fc7f6709",
-        wrapAround: false,
-        worldCopyJump: true,
-    });
-      map.add(tiledLayer);
-
-      view.popupEnabled = false;
-        view.on("click", (event) => {
-          // Get the coordinates of the click on the view
-          const lat = Math.round(event.mapPoint.latitude * 1000) / 1000;
-          const lon = Math.round(event.mapPoint.longitude * 1000) / 1000;
-
-          view.openPopup({
-            // Set the popup's title to the coordinates of the location
-            title: "Reverse geocode: [" + lon + ", " + lat + "]",
-            location: event.mapPoint // Set the location of the popup to the clicked location
-          });
-
-          const params = {
-            location: event.mapPoint
-          };
-
-          // Display the popup
-          // Execute a reverse geocode using the clicked location
-          locator
-            .locationToAddress(locatorUrl, params)
-            .then((response) => {
-              // If an address is successfully found, show it in the popup's content
-              view.popup.content = response.address;
-            })
-            .catch(() => {
-              // If the promise fails and no result is found, show a generic message
-              view.popup.content = "No address was found for this location";
-            });
-        });
-});
-
-  </script>
 </head>
-
 <body>
   <div id="viewDiv">
   </div>
 </body>
-
+<script src="https://js.arcgis.com/4.29/"></script>
+<script src="map.js"></script>
 </html>
 ‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍
