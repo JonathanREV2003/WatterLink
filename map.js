@@ -4,9 +4,16 @@ const API_KEY = '664f855485a79428ecf25f52fc7f6709'
 var capa = "TA2"
 var opacity = 0.3
 let lat, lon;
-var units;
+var units = "metric";
 var unixTimestamp = Math.floor(new Date().getTime() / 1000);
 var temp_max;
+var temp_min;
+var pressure;
+var seaLevel;
+var humidity;
+var groundLevel;
+var sunrise;
+var sunset;
 var icon;
 
 
@@ -37,7 +44,7 @@ require([
       });
     
     tiledLayer = new WebTileLayer({
-        urlTemplate: `http://maps.openweathermap.org/maps/2.0/weather/${capa}/{level}/{col}/{row}?date=${unixTimestamp}&opacity=${opacity}&fill_bound=true&appid=${API_KEY}`,
+        urlTemplate: `http://maps.openweathermap.org/maps/2.0/weather/${capa}/{level}/{col}/{row}?date=${unixTimestamp}&opacity=${opacity}&palette=-65:821692;-55:821692;-45:821692;-40:821692;-30:8257db;-20:208cec;-10:20c4e8;0:23dddd;10:c2ff28;20:fff028;25:ffc228;30:fc8014&fill_bound=true&appid=${API_KEY}`,
         wrapAround: false,
         worldCopyJump: true,
     });
@@ -87,18 +94,34 @@ locator
                                 </tr>
                                 <tr>
                                   <td style="padding: 0 5px;">Min</td>
-                                  <td style="padding: 0 5px;">${temp_max}</td>
+                                  <td style="padding: 0 5px;">${temp_min}</td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 0 5px;">Pressure</td>
+                                  <td style="padding: 0 5px;">${pressure}</td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 0 5px;">Sea Level</td>
+                                  <td style="padding: 0 5px;">${seaLevel}</td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 0 5px;">Humidity</td>
+                                  <td style="padding: 0 5px;">${humidity}</td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 0 5px;">Ground Level</td>
+                                  <td style="padding: 0 5px;">${groundLevel}</td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 0 5px;">Sunrise</td>
+                                  <td style="padding: 0 5px;">${window.moment(sunrise * 1000).format('HH:mm a')}</td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 0 5px;">Sunset</td>
+                                  <td style="padding: 0 5px;">${window.moment(sunset * 1000).format('HH:mm a')}</td>
                                 </tr>
                               </table>`;
     }, 3000);
-
-
-
-
-
-
-
-
             })
             .catch(() => {
               // If the promise fails and no result is found, show a generic message
@@ -113,7 +136,15 @@ locator
         
                 fetch(`https://pro.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&exclude=hourly,minutely&units=${units}&appid=${API_KEY}`).
                 then(res => res.json()).then(dataActual => {
+                    console.log(dataActual);
                     temp_max = dataActual.main.temp_max;
+                    temp_min = dataActual.main.temp_min;
+                    pressure = dataActual.main.pressure;
+                    seaLevel = dataActual.main.sea_level;
+                    humidity = dataActual.main.humidity;
+                    groundLevel = dataActual.main.grnd_level
+                    sunrise = dataActual.sys.sunrise;
+                    sunset = dataActual.sys.sunset;
                     icon = dataActual.weather[0].icon
 
                 })
