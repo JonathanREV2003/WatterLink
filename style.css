@@ -8,23 +8,34 @@
 }
 
 body{
-    background: url('https://images.unsplash.com/photo-1580193483760-d0ef2abaa348?q=80&w=1674&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-    background-repeat: no-repeat;
-    background-size: cover;
-    overflow: hidden;
-    height: 100vh;
     font-family: 'Poppins', sans-serif;
+    color: #07DE99;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; 
+}
+#bg-video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    transform: translateX(-50%) translateY(-50%);
 }
 
 .container{
     padding: 20px 70px;
-    color: black;
+    color: white;
 }
 
 .current-info{
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    align-items: flex-start; /* Alinear elementos al principio */
 }
 
 .date-container{
@@ -67,22 +78,22 @@ body{
     border-radius: 10px;
     margin: 10px 0; 
     border: 2px solid #eee;
-}
+}   
 
 .current-info .others .weather-item{
     display: flex;
     justify-content: space-between;
 }
 .current-info .others .weather-item1{
-    margin-top: -25%;
-    margin-bottom: -15%;
+    margin-top: -35px;
+    margin-bottom: -20px;
     display: flex;
     justify-content: center;
 }
 
 .future-forecast{
     background: rgba(24, 24, 27, 0.8);
-    padding: 25px;
+    padding: 15px;
     position: fixed;
     bottom: 0;
     display: flex;
@@ -124,7 +135,7 @@ body{
     border: 1px solid #eee;
     border-radius: 10px;
     padding: 15px;
-    width: 160px;
+    width: 170px;
     height: 255px;
 }
 
@@ -194,24 +205,12 @@ position: fixed; /* Posición fija para que el widget se mantenga en su lugar */
 
 }
 
-@media only screen and (max-width: 10000px){
-    .future-forecast{
-        justify-content: start;
-        align-items: none;
-        overflow-y: scroll;
-    }
-}
 .air-pollution-panel {
-    position: flex;
-    bottom: 20px;
-    right: 20px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    width: 300px;
-    max-height: 200px;
-    overflow: hidden;
-    transition: max-height 0.3s ease-in-out;
+    margin-left: 20px; /* Agrega separación entre place-container y air-pollution-panel */
+    background-color: rgba(249, 199, 168, 0.6); 
+    border: 2px solid #eee; /* Mismo borde que place-container */
+    border-radius: 10px; /* Mismo radioo  que place-container */
+    padding: 10px; /* Agrega un poco de espaciado interno */
   }
   
   .panel-header {
@@ -244,3 +243,73 @@ position: fixed; /* Posición fija para que el widget se mantenga en su lugar */
   .air-pollution-panel.open .toggle-button {
     transform: rotate(45deg);
   }
+
+  @media only screen and (max-width: 1400px){
+    .future-forecast{
+        justify-content: start;
+        align-items: none;
+        overflow-x: scroll;
+    }
+}
+
+button {
+    background-color: #121035; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.settings-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #f3f8f6; 
+    transition: transform 0.3s ease; 
+}
+
+.settings-icon:hover {
+    transform: rotate(90deg); 
+}
+
+.settings-menu {
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background-color: rgba(24, 24, 27, 0.8); 
+    border: 2px solid #f4f7f6; 
+    border-radius: 10px;
+    padding: 20px;
+    display: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    color: #fff;
+    max-width: 200px; 
+}
+
+.settings-menu.show {
+    display: block;
+}
+
+.settings-menu select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: rgba(249, 199, 168, 0.6); 
+}
+
+.settings-menu select:focus {
+    outline: none; 
+    box-shadow: 0 0 5px rgba(159, 162, 161, 0.5); 
+}
+body {
+    overflow: hidden;
+}

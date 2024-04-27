@@ -49,7 +49,7 @@ function getWeatherData(){
         latitude = success.coords.latitude;
         longitude = success.coords.longitude;
 
-        fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`).
+        fetch(`https://pro.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`).
         then(res => res.json()).then(dataActual => {
 
           console.log(dataActual)
@@ -66,7 +66,7 @@ function getWeatherData(){
     
 }
 function getWeatherDataForecast(){
-  fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`).
+  fetch(`https://pro.openweathermap.org/data/2.5/forecast/daily?lat=${latitude}&lon=${longitude}&cnt=8&mode=json,minutely&units=metric&appid=${API_KEY}`).
   then(res => res.json()).then(dataForecast => {
 
     console.log(dataForecast)
@@ -75,6 +75,8 @@ function getWeatherDataForecast(){
 }
 
 function showWeatherData(dataActual) {
+  timeZone.innerHTML = dataActual.sys.country + "/" + dataActual.name;
+  countryElement.innerHTML = latitude + 'N&nbsp&nbsp' + longitude + 'E';
   document.querySelector('.w-icon').src = `https://openweathermap.org/img/wn/${iconid}@2x.png`;
   var temparature = dataActual.main.feels_like;
   var temparatureMax = dataActual.main.temp_max;
@@ -119,31 +121,18 @@ function showWeatherData(dataActual) {
     </div>
   `;
 }
-
-function showWeatherDataForecast(dataForecast) {
-  var sunrise1 = dataForecast.city.sunrise
-  var sunset1 = dataForecast.city.sunset
-  console.log(window.moment(sunrise1 * 1000).format('HH:mm a'))
-  console.log(window.moment(sunset1 * 1000).format('HH:mm a'))
-  
+function showWeatherDataForecast(dataForecast) {  
   let otherDayForcast = ''
-  dataForecast.list.forEach((list) => {
-    console.log(moment.unix(1713042000).format('YYYY-MM-DD hh:mm:ss'));
-    let time = list.dt_txt.split(' ')[1]; // Divide el string de fecha y hora y selecciona solo la parte de la hora
-    let time1 = list.dt_txt.split(' ')[0];
-
-
+  dataForecast.list.slice(1).forEach((list) => {
     otherDayForcast += `
     <div class="weather-forecast" id="weather-forecast">
     <div class="weather-forecast-item">
         <div class="day">${window.moment(list.dt * 1000).format('dddd')}</div>
-        <div class="temp">${window.moment(list.dt * 1000).format('YYYY-MM-DD')}</div>
-        <div class="temp">${window.moment.unix(list.dt).format('HH:mm:ss A')}</div> <!-- Muestra solo la hora -->
+        <div class="day">${window.moment(list.dt * 1000).format('YYYY-MM-DD')}</div>
         <img src="https://openweathermap.org/img/wn/${list.weather[0].icon}.png" alt="weather icon" class="w-icon">
-        <div class="temp">${list.weather[0].description}</div> 
-        <div class="temp">Feels Like - ${list.main.feels_like}</div>
-        <div class="temp">Max - ${list.main.temp_max}</div>
-        <div class="temp">Min - ${list.main.temp_min}</div>
+        <div class="temp">Day ${list.temp.day}</div>
+        <div class="temp">Night ${list.temp.night}</div>
+        
     </div>
 </div>
     `
@@ -154,7 +143,7 @@ function showWeatherDataForecast(dataForecast) {
 
 
 function getAirPollutionData(latitude, longitude) {
-  const apiUrl = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`;
+  const apiUrl = `https://pro.openweathermap.org/data/2.5/air_pollution?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`;
 
   fetch(apiUrl)
     .then(response => response.json())
@@ -165,22 +154,22 @@ function getAirPollutionData(latitude, longitude) {
 
       switch (airQualityIndex) {
         case 1:
-          airQualityDescription = 'Good';
+          airQualityDescription = 'Buena';
           break;
         case 2:
-          airQualityDescription = 'Fair';
+          airQualityDescription = 'Justa';
           break;
         case 3:
-          airQualityDescription = 'Moderate';
+          airQualityDescription = 'Moderada';
           break;
         case 4:
-          airQualityDescription = 'Poor';
+          airQualityDescription = 'Pobre';
           break;
         case 5:
-          airQualityDescription = 'Very Poor';
+          airQualityDescription = 'Muy pobre';
           break;
         default:
-          airQualityDescription = 'Unknown';
+          airQualityDescription = 'Desconocida';
       }
 
       airPollutionDataElement.innerHTML = `
@@ -209,6 +198,48 @@ const panelContent = document.querySelector('.panel-content');
 toggleButton.addEventListener('click', () => {
   airPollutionPanel.classList.toggle('open');
 });
+const settingsIcon = document.querySelector('.settings-icon');
+const settingsMenu = document.createElement('div');
+settingsMenu.classList.add('settings-menu');
+document.body.appendChild(settingsMenu);
 
+settingsIcon.addEventListener('click', () => {
+    settingsMenu.classList.toggle('show');
+});
+
+const tempUnitSelect = document.createElement('select');
+tempUnitSelect.innerHTML = `
+    <option value="celsius">Celsius</option>
+    <option value="fahrenheit">Fahrenheit</option>
+`;
+settingsMenu.appendChild(tempUnitSelect);
+
+const windUnitSelect = document.createElement('select');
+windUnitSelect.innerHTML = `
+    <option value="kph">K/h</option>
+    <option value="mph">Mph</option>
+`;
+settingsMenu.appendChild(windUnitSelect);
+
+tempUnitSelect.addEventListener('change', () => {
+  const tempUnit = tempUnitSelect.value;
+});
+
+windUnitSelect.addEventListener('change', () => {
+  const windUnit = windUnitSelect.value;
+});
+
+const pageSizeSelect = document.createElement('select');
+pageSizeSelect.innerHTML = `
+    <option value="1">Tamaño normal</option>
+    <option value="1.2">Tamaño grande</option>
+    <option value="0.8">Tamaño pequeño</option>
+`;
+settingsMenu.appendChild(pageSizeSelect);
+pageSizeSelect.addEventListener('change', () => {
+  const pageSize = parseFloat(pageSizeSelect.value);
+  document.body.style.transform = `scale(${pageSize})`;
+  document.body.style.transformOrigin = '0 0'; 
+});
 
 
