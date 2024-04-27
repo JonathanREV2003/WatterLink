@@ -229,6 +229,17 @@ windUnitSelect.addEventListener('change', () => {
   const windUnit = windUnitSelect.value;
 });
 
-
+const pageSizeSelect = document.createElement('select');
+pageSizeSelect.innerHTML = `
+    <option value="1">Tamaño normal</option>
+    <option value="1.2">Tamaño grande</option>
+    <option value="0.8">Tamaño pequeño</option>
+`;
+settingsMenu.appendChild(pageSizeSelect);
+pageSizeSelect.addEventListener('change', () => {
+  const pageSize = parseFloat(pageSizeSelect.value);
+  document.body.style.transform = `scale(${pageSize})`;
+  document.body.style.transformOrigin = '0 0'; 
+});
 
 

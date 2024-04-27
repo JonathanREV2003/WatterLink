@@ -310,3 +310,6 @@ button {
     outline: none; 
     box-shadow: 0 0 5px rgba(159, 162, 161, 0.5); 
 }
+body {
+    overflow: hidden;
+}
