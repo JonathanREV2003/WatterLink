@@ -198,7 +198,36 @@ const panelContent = document.querySelector('.panel-content');
 toggleButton.addEventListener('click', () => {
   airPollutionPanel.classList.toggle('open');
 });
+const settingsIcon = document.querySelector('.settings-icon');
+const settingsMenu = document.createElement('div');
+settingsMenu.classList.add('settings-menu');
+document.body.appendChild(settingsMenu);
 
+settingsIcon.addEventListener('click', () => {
+    settingsMenu.classList.toggle('show');
+});
+
+const tempUnitSelect = document.createElement('select');
+tempUnitSelect.innerHTML = `
+    <option value="celsius">Celsius</option>
+    <option value="fahrenheit">Fahrenheit</option>
+`;
+settingsMenu.appendChild(tempUnitSelect);
+
+const windUnitSelect = document.createElement('select');
+windUnitSelect.innerHTML = `
+    <option value="kph">K/h</option>
+    <option value="mph">Mph</option>
+`;
+settingsMenu.appendChild(windUnitSelect);
+
+tempUnitSelect.addEventListener('change', () => {
+  const tempUnit = tempUnitSelect.value;
+});
+
+windUnitSelect.addEventListener('change', () => {
+  const windUnit = windUnitSelect.value;
+});
 
 
 
