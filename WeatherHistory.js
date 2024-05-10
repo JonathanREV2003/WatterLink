@@ -1,17 +1,29 @@
 // API URL
 const API_KEY = '664f855485a79428ecf25f52fc7f6709'
-const apiUrl = `https://history.openweathermap.org/data/2.5/history/city?lat=41.85&lon=-87.65&appid=${API_KEY}`;
+let latitude, longitude;
 
+
+//https://history.openweathermap.org/data/2.5/history/city?lat={lat}&lon={lon}&type=hour&start={start}&end={end}&appid={API key}
+//COMBERTIR LA VARIABLE TIEMPO A UNIT
+
+fetchWeatherData();
 // Función para obtener los datos de la API
 function fetchWeatherData() {
-  fetch(apiUrl)
-    .then(response => response.json())
-    .then(data => {
-      displayWeatherData(data);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
+    navigator.geolocation.getCurrentPosition((success) =>{
+        console.log(success);
+    
+        latitude = success.coords.latitude;
+        longitude = success.coords.longitude;
+    
+        fetch(`https://history.openweathermap.org/data/2.5/history/city?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`)
+        .then(response => response.json())
+        .then(data => {
+          displayWeatherData(data);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+        })
 }
 
 // Función para mostrar los datos del clima en la página
@@ -39,4 +51,3 @@ function displayWeatherData(data) {
 }
 
 // Llamar a la función para obtener los datos del clima
-fetchWeatherData();
