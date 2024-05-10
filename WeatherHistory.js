@@ -4,7 +4,7 @@ let latitude, longitude;
 
 
 //https://history.openweathermap.org/data/2.5/history/city?lat={lat}&lon={lon}&type=hour&start={start}&end={end}&appid={API key}
-//COMBERTIR LA VARIABLE TIEMPO A UNIT
+//CONVERTIR LA VARIABLE TIEMPO A UNIT
 
 fetchWeatherData();
 // Función para obtener los datos de la API
@@ -39,6 +39,10 @@ function displayWeatherData(data) {
         <p>Fecha: ${item.dt_txt}</p>
         <p>Temperatura: ${item.main.temp}°C</p>
         <p>Descripción: ${item.weather[0].description}</p>
+        <p>Humedad: ${item.main.humidity}%</p>
+        <p>Presión: ${item.main.pressure} hPa</p>
+        <p>Temperatura Mínima: ${item.main.temp_min}°C</p>
+        <p>Temperatura Máxima: ${item.main.temp_max}°C</p>
         <hr>
       `;
       weatherDataContainer.appendChild(weatherItem);

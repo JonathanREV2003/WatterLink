@@ -120,7 +120,6 @@ function showWeatherData(dataActual) {
       <div>${humidity}%</div>
     </div>
     </div>
-    </div>
     <div class="weather-item">
       <div>Sunrise</div>
       <div>${window.moment(sunrise * 1000).format('HH:mm a')}</div>
