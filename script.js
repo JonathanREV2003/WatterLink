@@ -33,6 +33,7 @@ setInterval(() => {
   const hour12Format = hour >= 13 ? hour % 12 : hour;
   const minutes = time.getMinutes();
   const ampm = hour >= 12 ? 'PM' : 'AM';
+  
 
   timeElement.innerHTML = `${hour12Format}:${formatMinutes(minutes)} <span id="am-pm">${ampm}</span>`;
 
@@ -40,6 +41,7 @@ setInterval(() => {
 }, 1000);
 
 let latitude, longitude;
+
 
 getWeatherData()
 function getWeatherData(){
@@ -85,6 +87,8 @@ function showWeatherData(dataActual) {
   var clouds = dataActual.weather[0].description;
   var sunrise = dataActual.sys.sunrise;
   var sunset = dataActual.sys.sunset;
+  var humidity = dataActual.main.humidity;
+
   currentWeatherItemsElement.innerHTML = `    
     <div class="weather-item1">
     <img src="https://openweathermap.org/img/wn/${iconid}@2x.png" alt="weather icon" class="w-icon2">
@@ -112,6 +116,12 @@ function showWeatherData(dataActual) {
     </div>
     </div>
     <div class="weather-item">
+      <div>Humidity</div>
+      <div>${humidity}%</div>
+    </div>
+    </div>
+    </div>
+    <div class="weather-item">
       <div>Sunrise</div>
       <div>${window.moment(sunrise * 1000).format('HH:mm a')}</div>
     </div>
@@ -119,6 +129,7 @@ function showWeatherData(dataActual) {
       <div>Sunset</div>
       <div>${window.moment(sunset * 1000).format('HH:mm a')}</div>
     </div>
+   
   `;
 }
 function showWeatherDataForecast(dataForecast) {  
