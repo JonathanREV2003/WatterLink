@@ -145,6 +145,7 @@ locator
                     groundLevel = dataActual.main.grnd_level
                     sunrise = dataActual.sys.sunrise;
                     sunset = dataActual.sys.sunset;
+                    
                     icon = dataActual.weather[0].icon
 
                 })
