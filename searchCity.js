@@ -114,7 +114,7 @@ function getCityID(){
             latitude =  data.coord.lat;
             longitude = data.coord.lon;
 
-          fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}8&&appid=664f855485a79428ecf25f52fc7f6709`).
+          fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}8&&appid=664f855485a79428ecf25f52fc7f6709`).
           then(res => res.json()).then(data1 => {
             console.log(data1);
             city = data1[0].name
