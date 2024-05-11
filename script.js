@@ -8,6 +8,8 @@ const currentTempElement = document.getElementById('current-temp');
 
 var cityid;
 var iconid;
+let tempUnit = 'celsius';
+let currentLanguage = 'en';
 
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 
@@ -59,7 +61,7 @@ function getWeatherData(){
           iconid = dataActual.weather[0].icon
           console.log(cityid)
           console.log(iconid)
-          showWeatherData(dataActual);
+          showWeatherData(dataActual, tempUnit);
           getAirPollutionData(latitude, longitude); 
 
           getWeatherDataForecast();
@@ -76,13 +78,13 @@ function getWeatherDataForecast(){
   })
 }
 
-function showWeatherData(dataActual) {
+function showWeatherData(dataActual, tempUnit) {
   timeZone.innerHTML = dataActual.sys.country + "/" + dataActual.name;
   countryElement.innerHTML = latitude + 'N&nbsp&nbsp' + longitude + 'E';
   document.querySelector('.w-icon').src = `https://openweathermap.org/img/wn/${iconid}@2x.png`;
-  var temparature = dataActual.main.feels_like;
-  var temparatureMax = dataActual.main.temp_max;
-  var temparatureMin = dataActual.main.temp_min;
+  var temparature = convertTemperature(dataActual.main.feels_like, tempUnit).toFixed(2);
+  var temparatureMax = convertTemperature(dataActual.main.temp_max, tempUnit).toFixed(2);
+  var temparatureMin = convertTemperature(dataActual.main.temp_min, tempUnit).toFixed(2);
   var wind_Speed = dataActual.wind.speed;
   var clouds = dataActual.weather[0].description;
   var sunrise = dataActual.sys.sunrise;
@@ -98,17 +100,17 @@ function showWeatherData(dataActual) {
       <div>&nbsp;&nbsp;${clouds}</div>
     </div>
     <div class="weather-item">
-      <div>Feels Like</div>
-      <div>${temparature}</div>
-    </div>
-    <div class="weather-item">
-      <div>Max</div>
-      <div>${temparatureMax}</div>
-    </div>
-    <div class="weather-item">
-      <div>Min</div>
-      <div>${temparatureMin}</div>
-    </div>
+    <div>Feels Like</div>
+    <div>${temparature}°</div>
+  </div>
+  <div class="weather-item">
+    <div>Max</div>
+    <div>${temparatureMax}°</div>
+  </div>
+  <div class="weather-item">
+    <div>Min</div>
+    <div>${temparatureMin}°</div>
+  </div>
     </div>
     <div class="weather-item">
       <div>Wind Speed</div>
@@ -131,22 +133,24 @@ function showWeatherData(dataActual) {
    
   `;
 }
-function showWeatherDataForecast(dataForecast) {  
-  let otherDayForcast = ''
+function showWeatherDataForecast(dataForecast) {
+  let otherDayForcast = '';
   dataForecast.list.slice(1).forEach((list) => {
+    const dayTemp = convertTemperature(list.temp.day, tempUnit);
+    const nightTemp = convertTemperature(list.temp.night, tempUnit);
+
     otherDayForcast += `
     <div class="weather-forecast" id="weather-forecast">
     <div class="weather-forecast-item">
         <div class="day">${window.moment(list.dt * 1000).format('dddd')}</div>
         <div class="day">${window.moment(list.dt * 1000).format('YYYY-MM-DD')}</div>
         <img src="https://openweathermap.org/img/wn/${list.weather[0].icon}.png" alt="weather icon" class="w-icon">
-        <div class="temp">Day ${list.temp.day}</div>
-        <div class="temp">Night ${list.temp.night}</div>
-        
+        <div class="temp">Day ${dayTemp.toFixed(2)}°</div>
+        <div class="temp">Night ${nightTemp.toFixed(2)}°</div>
     </div>
 </div>
-    `
-  })
+    `;
+  });
 
   weatherForecastElement.innerHTML = otherDayForcast;
 }
@@ -224,32 +228,75 @@ tempUnitSelect.innerHTML = `
 `;
 settingsMenu.appendChild(tempUnitSelect);
 
-const windUnitSelect = document.createElement('select');
-windUnitSelect.innerHTML = `
-    <option value="kph">K/h</option>
-    <option value="mph">Mph</option>
+const languageSelect = document.createElement('select');
+languageSelect.innerHTML = `
+  <option value="en">English</option>
+  <option value="es">Español</option>
 `;
-settingsMenu.appendChild(windUnitSelect);
+settingsMenu.appendChild(languageSelect);
 
 tempUnitSelect.addEventListener('change', () => {
-  const tempUnit = tempUnitSelect.value;
+  tempUnit = tempUnitSelect.value;
+  getWeatherDataForecast();
 });
 
-windUnitSelect.addEventListener('change', () => {
-  const windUnit = windUnitSelect.value;
+/*tempUnitSelect.addEventListener('change', () => {
+  const tempUnit = tempUnitSelect.value;
+});*/
+
+languageSelect.addEventListener('change', () => {
+  currentLanguage = languageSelect.value;
+  updateLanguage();
 });
 
 const pageSizeSelect = document.createElement('select');
 pageSizeSelect.innerHTML = `
-    <option value="1">Tamaño normal</option>
-    <option value="1.2">Tamaño grande</option>
-    <option value="0.8">Tamaño pequeño</option>
+    <option value="normal">Tamaño normal</option>
+    <option value="large">Tamaño grande</option>
+    <option value="small">Tamaño pequeño</option>
 `;
 settingsMenu.appendChild(pageSizeSelect);
 pageSizeSelect.addEventListener('change', () => {
-  const pageSize = parseFloat(pageSizeSelect.value);
-  document.body.style.transform = `scale(${pageSize})`;
-  document.body.style.transformOrigin = '0 0'; 
+  const pageSize = pageSizeSelect.value;
+  const elements = document.querySelectorAll('.changeable-element'); 
+
+  elements.forEach((element) => {
+    element.classList.remove('size-normal', 'size-large', 'size-small'); 
+    element.classList.add(`size-${pageSize}`); 
+  });
 });
 
+function convertTemperature(temp, unit) {
+  if (unit === 'celsius') {
+    return temp;
+  } else if (unit === 'fahrenheit') {
+    return (temp * 9/5) + 32;
+  }
+}
 
+function updateLanguage() {
+  
+  document.querySelector('.future-forecast h2').textContent = translations[currentLanguage].weatherForecast;
+  document.querySelector('.day').textContent = translations[currentLanguage].saturday;
+  document.querySelector('.day sunday').textContent = translations[currentLanguage].sunday;
+  
+}
+
+const translations = {
+  en: {
+    weatherForecast: 'Weather Forecast',
+    day: 'Day',
+    night: 'Night',
+    saturday: 'Saturday',
+    sunday: 'Sunday',
+    
+  },
+  es: {
+    weatherForecast: 'Pronóstico del Tiempo',
+    day: 'Día',
+    night: 'Noche',
+    saturday: 'Sabado',
+    sunday: 'Domingo',
+    
+  }
+};
