@@ -9,6 +9,7 @@ const currentTempElement = document.getElementById('current-temp');
 var cityid;
 var iconid;
 let tempUnit = 'celsius';
+let currentLanguage = 'en';
 
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 
@@ -227,12 +228,12 @@ tempUnitSelect.innerHTML = `
 `;
 settingsMenu.appendChild(tempUnitSelect);
 
-const windUnitSelect = document.createElement('select');
-windUnitSelect.innerHTML = `
-    <option value="kph">K/h</option>
-    <option value="mph">Mph</option>
+const languageSelect = document.createElement('select');
+languageSelect.innerHTML = `
+  <option value="en">English</option>
+  <option value="es">Español</option>
 `;
-settingsMenu.appendChild(windUnitSelect);
+settingsMenu.appendChild(languageSelect);
 
 tempUnitSelect.addEventListener('change', () => {
   tempUnit = tempUnitSelect.value;
@@ -243,8 +244,9 @@ tempUnitSelect.addEventListener('change', () => {
   const tempUnit = tempUnitSelect.value;
 });*/
 
-windUnitSelect.addEventListener('change', () => {
-  const windUnit = windUnitSelect.value;
+languageSelect.addEventListener('change', () => {
+  currentLanguage = languageSelect.value;
+  updateLanguage();
 });
 
 const pageSizeSelect = document.createElement('select');
@@ -272,3 +274,29 @@ function convertTemperature(temp, unit) {
   }
 }
 
+function updateLanguage() {
+  
+  document.querySelector('.future-forecast h2').textContent = translations[currentLanguage].weatherForecast;
+  document.querySelector('.day').textContent = translations[currentLanguage].saturday;
+  document.querySelector('.day sunday').textContent = translations[currentLanguage].sunday;
+  
+}
+
+const translations = {
+  en: {
+    weatherForecast: 'Weather Forecast',
+    day: 'Day',
+    night: 'Night',
+    saturday: 'Saturday',
+    sunday: 'Sunday',
+    
+  },
+  es: {
+    weatherForecast: 'Pronóstico del Tiempo',
+    day: 'Día',
+    night: 'Noche',
+    saturday: 'Sabado',
+    sunday: 'Domingo',
+    
+  }
+};
