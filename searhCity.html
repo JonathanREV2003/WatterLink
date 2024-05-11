@@ -1,0 +1,38 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="seaarchCity.css">
+    <link rel="icon" href="img/agua.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Weather Link</title>
+</head>
+<body>
+
+    <div class="container">
+
+        <h3>Select Country State and City</h3>
+
+        <div class="select_option" >
+            <select class="form-select country" id="1" aria-label="Default select example" onchange="loadStates()">
+                <option selected>Select Country</option>
+            </select>
+            <select class="form-select state" id="2"Default select example" onchange="loadCities()">
+                <option selected>Select State</option>
+            </select>
+            <select class="form-select city" id="3" aria-label="Default select example">
+                <option selected>Select City</option>
+            </select>
+        </div>
+
+        <button class="my-button" onclick="getCityID()">Buscar</button>
+
+    </div>
+    <div class="widget">
+        <div id="openweathermap-widget-1"></div>
+    </div>
+</body>
+    <script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
+
+
+<script src="searchCity.js"></script>
