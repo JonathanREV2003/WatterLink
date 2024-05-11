@@ -60,7 +60,7 @@ function getWeatherData(){
           iconid = dataActual.weather[0].icon
           console.log(cityid)
           console.log(iconid)
-          showWeatherData(dataActual);
+          showWeatherData(dataActual, tempUnit);
           getAirPollutionData(latitude, longitude); 
 
           getWeatherDataForecast();
@@ -77,7 +77,7 @@ function getWeatherDataForecast(){
   })
 }
 
-function showWeatherData(dataActual) {
+function showWeatherData(dataActual, tempUnit) {
   timeZone.innerHTML = dataActual.sys.country + "/" + dataActual.name;
   countryElement.innerHTML = latitude + 'N&nbsp&nbsp' + longitude + 'E';
   document.querySelector('.w-icon').src = `https://openweathermap.org/img/wn/${iconid}@2x.png`;
