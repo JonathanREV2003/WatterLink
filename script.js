@@ -241,15 +241,17 @@ windUnitSelect.addEventListener('change', () => {
 
 const pageSizeSelect = document.createElement('select');
 pageSizeSelect.innerHTML = `
-    <option value="1">Tamaño normal</option>
-    <option value="1.2">Tamaño grande</option>
-    <option value="0.8">Tamaño pequeño</option>
+    <option value="normal">Tamaño normal</option>
+    <option value="large">Tamaño grande</option>
+    <option value="small">Tamaño pequeño</option>
 `;
 settingsMenu.appendChild(pageSizeSelect);
 pageSizeSelect.addEventListener('change', () => {
-  const pageSize = parseFloat(pageSizeSelect.value);
-  document.body.style.transform = `scale(${pageSize})`;
-  document.body.style.transformOrigin = '0 0'; 
+  const pageSize = pageSizeSelect.value;
+  const elements = document.querySelectorAll('.changeable-element'); 
+
+  elements.forEach((element) => {
+    element.classList.remove('size-normal', 'size-large', 'size-small'); 
+    element.classList.add(`size-${pageSize}`); 
+  });
 });
-
-
