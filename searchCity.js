@@ -125,7 +125,7 @@ function getCityID(){
             console.log(data1[0].country)
   
             let search1 = city + ',' + state + ',' + country;
-            fetch(`https://openweathermap.org/data/2.5/find?q=${search1}&type=like&sort=population&cnt=30&appid=439d4b804bc8187953eb36d2a8c26a02`).
+            fetch(`https://openweathermap.org/data/2.5/find?q=${search1}&appid=439d4b804bc8187953eb36d2a8c26a02`).
             then(res => res.json()).then(data => {
               console.log(data)
               cityid = data.list[0].id
