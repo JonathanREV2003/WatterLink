@@ -6,6 +6,15 @@ const countryElement = document.getElementById('country');
 const weatherForecastElement = document.getElementById('weather-forecast');
 const currentTempElement = document.getElementById('current-temp');
 
+const outdoorActivitiesPanel = document.querySelector('.outdoor-activities-panel');
+const outdoorActivitiesContent = outdoorActivitiesPanel.querySelector('.panel-content');
+const outdoorActivitiesToggleButton = document.querySelector('.outdoor-activities-panel .toggle-button');
+
+outdoorActivitiesToggleButton.addEventListener('click', () => {
+    outdoorActivitiesPanel.classList.toggle('open');
+});
+
+
 var cityid;
 var iconid;
 let tempUnit = 'celsius';

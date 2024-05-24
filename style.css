@@ -372,3 +372,43 @@ body {
     background-color: #121035;
 }
   /*Menu vertical Fin*/
+
+  .outdoor-activities-panel {
+    margin-left: -400px;
+    margin-top: 160px;
+    background-color: rgba(249, 199, 168, 0.6); 
+    border: 2px solid #eee;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.toggle-button {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.panel-content {
+    padding: 10px;
+    overflow-y: auto;
+    max-height: 0;
+    transition: max-height 0.3s ease-in-out;
+}
+
+.outdoor-activities-panel.open .panel-content {
+    max-height: 150px;
+}
+
+.outdoor-activities-panel.open .toggle-button {
+    transform: rotate(45deg);
+}
