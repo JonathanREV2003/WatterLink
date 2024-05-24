@@ -206,7 +206,8 @@ position: fixed; /* Posición fija para que el widget se mantenga en su lugar */
 }
 
 .air-pollution-panel {
-    margin-left: 20px; /* Agrega separación entre place-container y air-pollution-panel */
+    margin-left: -400px; /* Agrega separación entre place-container y air-pollution-panel */
+    margin-top: 165px;
     background-color: rgba(249, 199, 168, 0.6); 
     border: 2px solid #eee; /* Mismo borde que place-container */
     border-radius: 10px; /* Mismo radioo  que place-container */
