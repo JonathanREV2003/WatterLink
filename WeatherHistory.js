@@ -9,22 +9,25 @@ let latitude, longitude;
 // Llamar a la función para obtener los datos del clima
 fetchWeatherData();
 // Función para obtener los datos de la API
-function fetchWeatherData() {
-    navigator.geolocation.getCurrentPosition((success) =>{
-        console.log(success);
-    
-        latitude = success.coords.latitude;
-        longitude = success.coords.longitude;
-    
-        fetch(`https://history.openweathermap.org/data/2.5/history/city?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`)
-        .then(response => response.json())
-        .then(data => {
-          displayWeatherData(data);
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-        })
+function fetchWeatherData(date) {
+  navigator.geolocation.getCurrentPosition((success) => {
+    console.log(success);
+
+    latitude = success.coords.latitude;
+    longitude = success.coords.longitude;
+
+    const startDate = date.toISOString().slice(0, 10);
+    const endDate = new Date(date.getTime() + 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+
+    fetch(`https://history.openweathermap.org/data/2.5/history/city?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`)
+      .then(response => response.json())
+      .then(data => {
+        displayWeatherData(data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  });
 }
 
 // Función para mostrar los datos del clima en la página
@@ -34,20 +37,26 @@ function displayWeatherData(data) {
 
   if (data.cod === '200') {
     const list = data.list;
+    const selectedDate = new Date(bdayInput.value);
+
     list.forEach(item => {
-      const weatherItem = document.createElement('div');
-      weatherItem.classList.add('weather-item');
-      weatherItem.innerHTML = `
-        <p>Fecha: ${item.dt_txt}</p>
-        <p>Temperatura: ${item.main.temp}°C</p>
-        <p>Descripción: ${item.weather[0].description}</p>
-        <p>Humedad: ${item.main.humidity}%</p>
-        <p>Presión: ${item.main.pressure} hPa</p>
-        <p>Temperatura Mínima: ${item.main.temp_min}°C</p>
-        <p>Temperatura Máxima: ${item.main.temp_max}°C</p>
-        <hr>
-      `;
-      weatherDataContainer.appendChild(weatherItem);
+      const itemDate = new Date(item.dt * 1000);
+
+      if (itemDate.toDateString() === selectedDate.toDateString()) {
+        const weatherItem = document.createElement('div');
+        weatherItem.classList.add('weather-item');
+        weatherItem.innerHTML = `
+          <p>Fecha: ${itemDate.toLocaleString()}</p>
+          <p>Temperatura: ${item.main.temp}°C</p>
+          <p>Descripción: ${item.weather[0].description}</p>
+          <p>Humedad: ${item.main.humidity}%</p>
+          <p>Presión: ${item.main.pressure} hPa</p>
+          <p>Temperatura Mínima: ${item.main.temp_min}°C</p>
+          <p>Temperatura Máxima: ${item.main.temp_max}°C</p>
+          <hr>
+        `;
+        weatherDataContainer.appendChild(weatherItem);
+      }
     });
   } else {
     const errorMessage = document.createElement('p');
@@ -188,3 +197,73 @@ var previousDay;
 daySelect.onchange = function () {
   previousDay = daySelect.value;
 };
+
+const bdayInput = document.getElementById('bday');
+bdayInput.addEventListener('change', handleDateChange);
+
+function handleDateChange() {
+  const selectedDate = new Date(bdayInput.value);
+  fetchWeatherData(selectedDate);
+}
+
+const settingsIcon = document.querySelector('.settings-icon');
+const settingsMenu = document.createElement('div');
+settingsMenu.classList.add('settings-menu');
+document.body.appendChild(settingsMenu);
+
+settingsIcon.addEventListener('click', () => {
+  settingsMenu.classList.toggle('show');
+});
+
+const tempUnitSelect = document.createElement('select');
+tempUnitSelect.innerHTML = `
+  <option value="celsius">Celsius</option>
+  <option value="fahrenheit">Fahrenheit</option>
+`;
+settingsMenu.appendChild(tempUnitSelect);
+
+const languageSelect = document.createElement('select');
+languageSelect.innerHTML = `
+<option value="en">English</option>
+<option value="es">Español</option>
+`;
+settingsMenu.appendChild(languageSelect);
+
+tempUnitSelect.addEventListener('change', () => {
+tempUnit = tempUnitSelect.value;
+getWeatherDataForecast();
+});
+
+/*tempUnitSelect.addEventListener('change', () => {
+const tempUnit = tempUnitSelect.value;
+});*/
+
+languageSelect.addEventListener('change', () => {
+currentLanguage = languageSelect.value;
+updateLanguage();
+});
+
+const pageSizeSelect = document.createElement('select');
+pageSizeSelect.innerHTML = `
+  <option value="normal">Tamaño normal</option>
+  <option value="large">Tamaño grande</option>
+  <option value="small">Tamaño pequeño</option>
+`;
+settingsMenu.appendChild(pageSizeSelect);
+pageSizeSelect.addEventListener('change', () => {
+const pageSize = pageSizeSelect.value;
+const elements = document.querySelectorAll('.changeable-element'); 
+
+elements.forEach((element) => {
+  element.classList.remove('size-normal', 'size-large', 'size-small'); 
+  element.classList.add(`size-${pageSize}`); 
+});
+});
+
+function convertTemperature(temp, unit) {
+if (unit === 'celsius') {
+  return temp;
+} else if (unit === 'fahrenheit') {
+  return (temp * 9/5) + 32;
+}
+}

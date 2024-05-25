@@ -275,11 +275,27 @@ function convertTemperature(temp, unit) {
 }
 
 function updateLanguage() {
-  
-  document.querySelector('.future-forecast h2').textContent = translations[currentLanguage].weatherForecast;
-  document.querySelector('.day').textContent = translations[currentLanguage].saturday;
-  document.querySelector('.day sunday').textContent = translations[currentLanguage].sunday;
-  
+  const lang = translations[currentLanguage];
+
+  document.querySelector('.future-forecast h2').textContent = lang.weatherForecast;
+  document.querySelectorAll('.day').forEach(dayElement => {
+    dayElement.textContent = lang.day;
+  });
+  document.querySelector('.day.sunday').textContent = lang.sunday;
+  document.querySelector('.weather-item > div:nth-child(1)').textContent = lang.description;
+  document.querySelectorAll('.weather-item > div:nth-child(2)')[2].textContent = lang.feelsLike;
+  document.querySelectorAll('.weather-item > div:nth-child(2)')[3].textContent = lang.max;
+  document.querySelectorAll('.weather-item > div:nth-child(2)')[4].textContent = lang.min;
+  document.querySelectorAll('.weather-item > div:nth-child(1)')[4].textContent = lang.windSpeed;
+  document.querySelectorAll('.weather-item > div:nth-child(1)')[5].textContent = lang.humidity;
+  document.querySelectorAll('.weather-item > div:nth-child(1)')[6].textContent = lang.sunrise;
+  document.querySelectorAll('.weather-item > div:nth-child(1)')[7].textContent = lang.sunset;
+  document.querySelector('.air-pollution-panel h3').textContent = `${lang.airQualityIndex}`;
+  document.querySelectorAll('.panel-content p')[0].childNodes[3].textContent = ` ${lang[Object.keys(lang).find(key => lang[key].includes('Good'))]}`;
+  document.querySelectorAll('.panel-content p')[1].textContent = `${lang.components}:`;
+  document.querySelector('a:nth-child(2) button').textContent = lang.map;
+  document.querySelector('a:nth-child(3) button').textContent = lang.historicalData;
+  document.querySelector('a:nth-child(4) button').textContent = lang.search;
 }
 
 const translations = {
@@ -289,16 +305,85 @@ const translations = {
     night: 'Night',
     saturday: 'Saturday',
     sunday: 'Sunday',
-    
+    monday: 'Monday',
+    tuesday: 'Tuesday',
+    wednesday: 'Wednesday',
+    thursday: 'Thursday',
+    friday: 'Friday',
+    description: 'Description',
+    feelsLike: 'Feels Like',
+    max: 'Max',
+    min: 'Min',
+    windSpeed: 'Wind Speed',
+    humidity: 'Humidity',
+    sunrise: 'Sunrise',
+    sunset: 'Sunset',
+    airQualityIndex: 'Air Quality Index',
+    good: 'Good',
+    fair: 'Fair',
+    moderate: 'Moderate',
+    poor: 'Poor',
+    veryPoor: 'Very Poor',
+    components: 'Components',
+    map: 'Map',
+    historicalData: 'Historical Data',
+    search: 'Search'
   },
   es: {
     weatherForecast: 'Pronóstico del Tiempo',
     day: 'Día',
     night: 'Noche',
-    saturday: 'Sabado',
+    saturday: 'Sábado',
     sunday: 'Domingo',
-    
+    monday: 'Lunes',
+    tuesday: 'Martes',
+    wednesday: 'Miércoles',
+    thursday: 'Jueves',
+    friday: 'Viernes',
+    description: 'Descripción',
+    feelsLike: 'Sensación Térmica',
+    max: 'Máxima',
+    min: 'Mínima',
+    windSpeed: 'Velocidad del Viento',
+    humidity: 'Humedad',
+    sunrise: 'Amanecer',
+    sunset: 'Puesta de Sol',
+    airQualityIndex: 'Índice de Calidad del Aire',
+    good: 'Buena',
+    fair: 'Justa',
+    moderate: 'Moderada',
+    poor: 'Pobre',
+    veryPoor: 'Muy Pobre',
+    components: 'Componentes',
+    map: 'Mapa',
+    historicalData: 'Datos Históricos',
+    search: 'Buscar'
   }
 };
 
-eslint-disable 
+function initTranslation() {
+  gapi.client.init({
+    'apiKey': '-----',
+    'discoveryDocs': ['https://translation.googleapis.com/$discovery/rest?version=v2']
+  }).then(function() {
+    translateText('Texto a traducir', 'es', 'en');
+  });
+}
+
+function translateText(text, sourceLang, targetLang) {
+  gapi.client.translation.translations.list({
+    'q': text,
+    'source': sourceLang,
+    'target': targetLang
+  }).then(function(response) {
+    console.log(response.result.data.translations[0].translatedText);
+  });
+}
+
+gapi.load('client', initTranslation);
+
+languageSelect.addEventListener('change', () => {
+  currentLanguage = languageSelect.value;
+  updateLanguage();
+});
+
