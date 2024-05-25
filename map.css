@@ -5,6 +5,7 @@ body,
   margin: 0;
   height: 100%;
   width: 100%;
+  position: relative;
 }
 
 .leaflet-control {
@@ -39,4 +40,21 @@ body,
 .esri-popup__main-container {
   width: 500px !important;
   max-height: none !important;
+}
+#layerDiv {
+  position: absolute;
+  top: 90px;  /* Ajusta estos valores según donde quieras que aparezca la lista desplegable */
+  left: 10px;
+}
+
+#layerSelect {
+  text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 5px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background-color: #f8f8f8;
+    color: #333;
 }

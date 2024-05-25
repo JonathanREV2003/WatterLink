@@ -168,3 +168,66 @@ function removeWeatherWidget() {
   }
 
 window.onload = loadCountries
+
+
+const settingsIcon = document.querySelector('.settings-icon');
+const settingsMenu = document.createElement('div');
+settingsMenu.classList.add('settings-menu');
+document.body.appendChild(settingsMenu);
+
+settingsIcon.addEventListener('click', () => {
+  settingsMenu.classList.toggle('show');
+});
+
+const tempUnitSelect = document.createElement('select');
+tempUnitSelect.innerHTML = `
+  <option value="celsius">Celsius</option>
+  <option value="fahrenheit">Fahrenheit</option>
+`;
+settingsMenu.appendChild(tempUnitSelect);
+
+const languageSelect = document.createElement('select');
+languageSelect.innerHTML = `
+<option value="en">English</option>
+<option value="es">Español</option>
+`;
+settingsMenu.appendChild(languageSelect);
+
+tempUnitSelect.addEventListener('change', () => {
+tempUnit = tempUnitSelect.value;
+getWeatherDataForecast();
+});
+
+/*tempUnitSelect.addEventListener('change', () => {
+const tempUnit = tempUnitSelect.value;
+});*/
+
+languageSelect.addEventListener('change', () => {
+currentLanguage = languageSelect.value;
+updateLanguage();
+});
+
+const pageSizeSelect = document.createElement('select');
+pageSizeSelect.innerHTML = `
+  <option value="normal">Tamaño normal</option>
+  <option value="large">Tamaño grande</option>
+  <option value="small">Tamaño pequeño</option>
+`;
+settingsMenu.appendChild(pageSizeSelect);
+pageSizeSelect.addEventListener('change', () => {
+const pageSize = pageSizeSelect.value;
+const elements = document.querySelectorAll('.changeable-element'); 
+
+elements.forEach((element) => {
+  element.classList.remove('size-normal', 'size-large', 'size-small'); 
+  element.classList.add(`size-${pageSize}`); 
+});
+});
+
+function convertTemperature(temp, unit) {
+if (unit === 'celsius') {
+  return temp;
+} else if (unit === 'fahrenheit') {
+  return (temp * 9/5) + 32;
+}
+}

@@ -144,3 +144,19 @@ body {
     opacity: 0;
     visibility: hidden;
 }
+
+.toggle-password {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .toggle-password::before {
+    content: "\f06e"; /* Código Unicode para el ícono de ojo cerrado */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+
+  }
+  
+  .toggle-password.active::before {
+    content: "\f070"; /* Código Unicode para el ícono de ojo abierto */
+  }
