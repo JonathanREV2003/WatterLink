@@ -206,7 +206,8 @@ position: fixed; /* Posición fija para que el widget se mantenga en su lugar */
 }
 
 .air-pollution-panel {
-    margin-left: 20px; /* Agrega separación entre place-container y air-pollution-panel */
+    margin-left: -400px; /* Agrega separación entre place-container y air-pollution-panel */
+    margin-top: 165px;
     background-color: rgba(249, 199, 168, 0.6); 
     border: 2px solid #eee; /* Mismo borde que place-container */
     border-radius: 10px; /* Mismo radioo  que place-container */
@@ -325,3 +326,89 @@ body {
   .size-small {
     font-size: 0.7rem;
   }
+  /*Menu vertical inicio*/
+  .menu-vertical {
+    position: relative;
+    display: inline-block;
+}
+
+.menu-btn {
+    background-color: #121035;
+    color: white;
+    padding: 15px 32px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.menu-contenido {
+    display: none;
+    position: absolute;
+    background-color: rgba(24, 24, 27, 0.8);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 4px;
+}
+
+.menu-contenido a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.menu-contenido a:hover {
+    background-color: #121035;
+    border-radius: 4px;
+}
+
+.menu-vertical:hover .menu-contenido {
+    display: block;
+}
+
+.menu-vertical:hover .menu-btn {
+    background-color: #121035;
+}
+  /*Menu vertical Fin*/
+
+  .outdoor-activities-panel {
+    margin-left: -400px;
+    margin-top: 160px;
+    background-color: rgba(249, 199, 168, 0.6); 
+    border: 2px solid #eee;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.toggle-button {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.panel-content {
+    padding: 10px;
+    overflow-y: auto;
+    max-height: 0;
+    transition: max-height 0.3s ease-in-out;
+}
+
+.outdoor-activities-panel.open .panel-content {
+    max-height: 150px;
+}
+
+.outdoor-activities-panel.open .toggle-button {
+    transform: rotate(45deg);
+}
