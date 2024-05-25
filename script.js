@@ -23,7 +23,7 @@ const API_KEY = '664f855485a79428ecf25f52fc7f6709'
 // https://api.openweathermap.org/data/2.5/weather?q=Toronto&appid=664f855485a79428ecf25f52fc7f6709
 // https://api.openweathermap.org/data/2.5/weather?q=Jalapa,%20GT&appid=664f855485a79428ecf25f52fc7f6709
 function formatMinutes(minutes) {
-  return minutes < 10 ? `0${minutes}` : minutes;
+  return minutes < 10 ? `0${minutes}` : `${minutes}`;
 }
 
 setInterval(() => {
@@ -300,3 +300,5 @@ const translations = {
     
   }
 };
+
+eslint-disable 
