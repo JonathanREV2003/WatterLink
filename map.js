@@ -42,16 +42,65 @@ require([
         wrapAround: false,
         zoom:2,
       });
+
+      
     
     tiledLayer = new WebTileLayer({
-        urlTemplate: `http://maps.openweathermap.org/maps/2.0/weather/${capa}/{level}/{col}/{row}?date=${unixTimestamp}&opacity=${opacity}&palette=-65:821692;-55:821692;-45:821692;-40:821692;-30:8257db;-20:208cec;-10:20c4e8;0:23dddd;10:c2ff28;20:fff028;25:ffc228;30:fc8014&fill_bound=true&appid=${API_KEY}`,
+        urlTemplate: `https://maps.openweathermap.org/maps/2.0/weather/${capa}/{level}/{col}/{row}?date=${unixTimestamp}&opacity=${opacity}&fill_bound=true&appid=${API_KEY}`,
         wrapAround: false,
         worldCopyJump: true,
     });
       map.add(tiledLayer);
 
-      view.popupEnabled = false;
-        view.on("click", (event) => {
+      
+
+      // Función para eliminar la capa del mapa
+    function removeLayer() {
+      if (tiledLayer) {
+          map.remove(tiledLayer);
+      }
+  }
+
+
+let map1 = {
+  layers: [
+    { id: 'CL', name: 'Cloudiness (%)' },
+    { id: 'HRD0', name: 'Relative humidity (%)' },
+    { id: 'SD0', name: 'Depth of snow (m)' },
+    { id: 'WND', name: 'Speed wind and direction (m/s)' }
+
+  ]
+};
+
+let select = document.getElementById('layerSelect');
+
+map1.layers.forEach(layer => {
+  let option = document.createElement('option');
+  option.value = layer.id;
+  option.text = layer.name;
+  select.appendChild(option);
+});
+
+
+select.addEventListener('change', function() {
+  capa= this.value;
+  removeLayer()
+
+  tiledLayer = new WebTileLayer({
+    urlTemplate: `https://maps.openweathermap.org/maps/2.0/weather/${capa}/{level}/{col}/{row}?date=${unixTimestamp}&opacity=${opacity}&fill_bound=true&appid=${API_KEY}`,
+    wrapAround: false,
+    worldCopyJump: true,
+  });
+
+  map.add(tiledLayer);
+  // Aquí puedes agregar el código para manejar cuando se selecciona una capa
+  console.log('Capa seleccionada:', capa);
+  console.log(unixTimestamp)
+});
+
+
+        view.popupEnabled = false;
+        view.on("click", function(event){
         getWeatherData()
           // Get the coordinates of the click on the view
           lat = Math.round(event.mapPoint.latitude * 1000) / 1000;
@@ -60,13 +109,14 @@ require([
           view.openPopup({
             // Set the popup's title to the coordinates of the location
             title: "Weather Data",
-            location: event.mapPoint, // Set the location of the popup to the clicked location
+            location: event.mapPoint,// Set the location of the popup to the clicked location
     
           });
 
           const params = {
             location: event.mapPoint
           };
+
 
           // Display the popup
           // Execute a reverse geocode using the clicked location
@@ -153,3 +203,6 @@ locator
             
         }
 });
+
+
+
