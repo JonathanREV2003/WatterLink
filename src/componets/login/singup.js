@@ -10,7 +10,7 @@ document.getElementById("formulario-crear").addEventListener("submit", (event) =
   account.register(email, password)
          .then(() => {
              // Redirigir al usuario a la página de inicio de sesión
-             window.location.href = "index.html";
+             window.location.href = "../main/login.html";
          })
          .catch(error => {
              // Manejar errores de registro
