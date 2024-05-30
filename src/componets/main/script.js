@@ -362,31 +362,7 @@ const translations = {
   }
 };
 
-function initTranslation() {
-  gapi.client.init({
-    'apiKey': '-----',
-    'discoveryDocs': ['https://translation.googleapis.com/$discovery/rest?version=v2']
-  }).then(function() {
-    translateText('Texto a traducir', 'es', 'en');
-  });
-}
 
-function translateText(text, sourceLang, targetLang) {
-  gapi.client.translation.translations.list({
-    'q': text,
-    'source': sourceLang,
-    'target': targetLang
-  }).then(function(response) {
-    console.log(response.result.data.translations[0].translatedText);
-  });
-}
-
-gapi.load('client', initTranslation);
-
-languageSelect.addEventListener('change', () => {
-  currentLanguage = languageSelect.value;
-  updateLanguage();
-});
 
 //Actividades recomendadas <:
 function showRecommendedActivities(clouds) {
