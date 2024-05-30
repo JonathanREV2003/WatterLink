@@ -388,6 +388,6 @@ body {
   
   .recommended-activities .panel-content {
     padding: 10px;
-    overflow-y: auto;
+    overflow-y:visible;
 
   }
