@@ -87,6 +87,7 @@ function showWeatherData(dataActual, tempUnit) {
   var temparatureMin = convertTemperature(dataActual.main.temp_min, tempUnit).toFixed(2);
   var wind_Speed = dataActual.wind.speed;
   var clouds = dataActual.weather[0].description;
+  showRecommendedActivities(clouds); //mostrar actividades recomendadas
   var sunrise = dataActual.sys.sunrise;
   var sunset = dataActual.sys.sunset;
   var humidity = dataActual.main.humidity;
@@ -361,29 +362,24 @@ const translations = {
   }
 };
 
-function initTranslation() {
-  gapi.client.init({
-    'apiKey': '-----',
-    'discoveryDocs': ['https://translation.googleapis.com/$discovery/rest?version=v2']
-  }).then(function() {
-    translateText('Texto a traducir', 'es', 'en');
-  });
+
+
+//Actividades recomendadas <:
+function showRecommendedActivities(clouds) {
+  const recommendedActivitiesElement = document.getElementById('recommended-activities-data');
+  let recommendedActivities = '';
+
+  if (clouds.includes('clear')) {
+    recommendedActivities = 'Día de deportes al aire libre, senderismo o ciclismo.';
+  } else if (clouds.includes('rain')) {
+    recommendedActivities = 'Día de actividades en casa o visitar museos.';
+  } else if (clouds.includes('snow')) {
+    recommendedActivities = 'Día de deportes de invierno como esquí o snowboard.';
+  } else if (clouds.includes('clouds')) {
+    recommendedActivities = 'Día de paseos en parques o actividades al aire libre ligeras.';
+  } else {
+    recommendedActivities = 'Día de relajación o actividades en interiores.';
+  }
+
+  recommendedActivitiesElement.innerHTML = `<p>${recommendedActivities}</p>`;
 }
-
-function translateText(text, sourceLang, targetLang) {
-  gapi.client.translation.translations.list({
-    'q': text,
-    'source': sourceLang,
-    'target': targetLang
-  }).then(function(response) {
-    console.log(response.result.data.translations[0].translatedText);
-  });
-}
-
-gapi.load('client', initTranslation);
-
-languageSelect.addEventListener('change', () => {
-  currentLanguage = languageSelect.value;
-  updateLanguage();
-});
-

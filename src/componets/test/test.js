@@ -17,7 +17,7 @@ describe('API Tests', () => {
 
   describe('convertTemperature', () => {
     it('should convert Celsius to Fahrenheit correctly', () => {
-      expect(convertTemperature(5, 'fahrenheit')).toBe(32);
+      expect(convertTemperature(5, 'fahrenheit')).toBe(41);
       expect(convertTemperature(35, 'fahrenheit')).toBe(95);
     });
   
