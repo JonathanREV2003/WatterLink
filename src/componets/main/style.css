@@ -63,11 +63,14 @@ body{
 .place-container .time-zone{
     font-size: 30px;
     font-weight: 100;
+
+
 }
 
 .place-container .country{
     font-size: 12px;
     font-weight: 700;
+
 }
 
 .current-info .others{
@@ -205,13 +208,18 @@ position: fixed; /* Posición fija para que el widget se mantenga en su lugar */
 
 }
 
-.air-pollution-panel {
-    margin-left: -50px; /* Agrega separación entre place-container y air-pollution-panel */
-    margin-top: 165px;
+.air-pollution-panel {/* Agrega separación entre place-container y air-pollution-panel */
     background-color: rgba(249, 199, 168, 0.6); 
     border: 2px solid #eee; /* Mismo borde que place-container */
     border-radius: 10px; /* Mismo radioo  que place-container */
     padding: 10px; /* Agrega un poco de espaciado interno */
+    left: 0;
+    max-width: 225px;
+    margin-left: 350px;
+    margin-top: 182px;
+    position: absolute;
+    color: #fff
+
   }
   
   .panel-header {
@@ -336,11 +344,13 @@ body {
 .menu-btn {
     background-color: #121035;
     color: white;
-    padding: 15px 32px;
+    padding: 15px 15px;
     font-size: 16px;
     border: none;
     cursor: pointer;
     border-radius: 4px;
+    position: absolute;
+    float: right;  
 }
 
 .menu-contenido {
@@ -375,19 +385,23 @@ body {
 
 /*Actividades recomendadas¿*/
 .recommended-activities {
-    margin-left: -50px;
+
     margin-top: 165px;
     background-color: rgba(249, 199, 168, 0.6);
     border: 2px solid #eee;
     border-radius: 10px;
     padding: 10px;
   }
-  
 
-  
-  
   .recommended-activities .panel-content {
     padding: 10px;
     overflow-y:visible;
 
+  }
+
+  .other-info{
+    position: absolute;  /* o 'fixed' si quieres que se mantenga en la parte superior al desplazarte */
+    top: 0;
+    right: 0;
+    margin-right: 75px;
   }

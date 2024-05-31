@@ -87,7 +87,7 @@ function showWeatherData(dataActual, tempUnit) {
   var temparatureMin = convertTemperature(dataActual.main.temp_min, tempUnit).toFixed(2);
   var wind_Speed = dataActual.wind.speed;
   var clouds = dataActual.weather[0].description;
-  showRecommendedActivities(clouds); //mostrar actividades recomendadas
+  //showRecommendedActivities(clouds); //mostrar actividades recomendadas
   var sunrise = dataActual.sys.sunrise;
   var sunset = dataActual.sys.sunset;
   var humidity = dataActual.main.humidity;
@@ -365,7 +365,7 @@ const translations = {
 
 
 //Actividades recomendadas <:
-function showRecommendedActivities(clouds) {
+/*function showRecommendedActivities(clouds) {
   const recommendedActivitiesElement = document.getElementById('recommended-activities-data');
   let recommendedActivities = '';
 
@@ -383,3 +383,4 @@ function showRecommendedActivities(clouds) {
 
   recommendedActivitiesElement.innerHTML = `<p>${recommendedActivities}</p>`;
 }
+*/
