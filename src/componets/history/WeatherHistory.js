@@ -16,13 +16,22 @@ function fetchWeatherData(date) {
     latitude = success.coords.latitude;
     longitude = success.coords.longitude;
 
-    const startDate = date.toISOString().slice(0, 10);
-    const endDate = new Date(date.getTime() + 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+    // Establecer la fecha de inicio a las 00:00 horas del día seleccionado
+    const startDate = new Date(date);
+    startDate.setHours(0, 0, 0, 0);
 
-    fetch(`https://history.openweathermap.org/data/2.5/history/city?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`)
+    // Establecer la fecha de fin a las 23:59:59 horas del día seleccionado
+    const endDate = new Date(date);
+    endDate.setHours(23, 59, 59, 999);
+
+    // Convertir a timestamp Unix en segundos
+    const startTimestamp = Math.floor(startDate.getTime() / 1000);
+    const endTimestamp = Math.floor(endDate.getTime() / 1000);
+
+    fetch(`https://history.openweathermap.org/data/2.5/history/city?lat=${latitude}&lon=${longitude}&type=hour&start=${startTimestamp}&end=${endTimestamp}&appid=${API_KEY}&units=metric`)
       .then(response => response.json())
       .then(data => {
-        displayWeatherData(data);
+        displayWeatherData(data, date);
       })
       .catch(error => {
         console.error('Error:', error);
@@ -31,38 +40,118 @@ function fetchWeatherData(date) {
 }
 
 // Función para mostrar los datos del clima en la página
-function displayWeatherData(data) {
+function displayWeatherData(data, selectedDate) {
   const weatherDataContainer = document.getElementById('weather-data');
   weatherDataContainer.innerHTML = '';
 
-  if (data.cod === '200') {
-    const list = data.list;
-    const selectedDate = new Date(bdayInput.value);
-
-    list.forEach(item => {
+  if (data.list && data.list.length > 0) {
+    let hoursData = {};
+    
+    // Organizar datos por hora
+    data.list.forEach(item => {
       const itemDate = new Date(item.dt * 1000);
-
       if (itemDate.toDateString() === selectedDate.toDateString()) {
+        const hour = itemDate.getHours();
+        if (!hoursData[hour]) {
+          hoursData[hour] = [];
+        }
+        hoursData[hour].push(item);
+      }
+    });
+
+    // Mostrar datos para cada hora, en orden
+    for (let hour = 0; hour <= 23; hour++) {
+      if (hoursData[hour]) {
+        // Promediar los datos si hay más de un registro por hora
+        let avgTemp = 0, avgHumidity = 0, avgPressure = 0;
+        let descriptions = new Set();
+
+        hoursData[hour].forEach(item => {
+          avgTemp += item.main.temp;
+          avgHumidity += item.main.humidity;
+          avgPressure += item.main.pressure;
+          descriptions.add(item.weather[0].description);
+        });
+
+        const count = hoursData[hour].length;
+        avgTemp /= count;
+        avgHumidity /= count;
+        avgPressure /= count;
+
         const weatherItem = document.createElement('div');
         weatherItem.classList.add('weather-item');
         weatherItem.innerHTML = `
-          <p>Fecha: ${itemDate.toLocaleString()}</p>
-          <p>Temperatura: ${item.main.temp}°C</p>
-          <p>Descripción: ${item.weather[0].description}</p>
-          <p>Humedad: ${item.main.humidity}%</p>
-          <p>Presión: ${item.main.pressure} hPa</p>
-          <p>Temperatura Mínima: ${item.main.temp_min}°C</p>
-          <p>Temperatura Máxima: ${item.main.temp_max}°C</p>
+          <h3>${hour}:00 - ${hour + 1}:00</h3>
+          <p>Temperatura: ${avgTemp.toFixed(1)}°C</p>
+          <p>Descripción: ${Array.from(descriptions).join(', ')}</p>
+          <p>Humedad: ${avgHumidity.toFixed(1)}%</p>
+          <p>Presión: ${avgPressure.toFixed(1)} hPa</p>
+          
           <hr>
         `;
         weatherDataContainer.appendChild(weatherItem);
       }
-    });
+    }
+
+    if (Object.keys(hoursData).length === 0) {
+      const noDataMessage = document.createElement('p');
+      noDataMessage.textContent = 'No hay datos disponibles para la fecha seleccionada.';
+      weatherDataContainer.appendChild(noDataMessage);
+    }
   } else {
     const errorMessage = document.createElement('p');
     errorMessage.textContent = 'Error al obtener los datos del clima.';
     weatherDataContainer.appendChild(errorMessage);
   }
+
+  // Añadir un resumen diario al final
+  const summary = calculateDailySummary(data.list, selectedDate);
+  if (summary) {
+    const summaryItem = document.createElement('div');
+    summaryItem.classList.add('weather-item', 'summary');
+    summaryItem.innerHTML = `
+      <h2>Resumen del Día</h2>
+      <p>Temperatura promedio: ${summary.avgTemp.toFixed(1)}°C</p>
+      <p>Temperatura mínima: ${summary.minTemp.toFixed(1)}°C</p>
+      <p>Temperatura máxima: ${summary.maxTemp.toFixed(1)}°C</p>
+      <p>Humedad promedio: ${summary.avgHumidity.toFixed(1)}%</p>
+      <p>Presión promedio: ${summary.avgPressure.toFixed(1)} hPa</p>
+      x1
+    `;
+    weatherDataContainer.appendChild(summaryItem);
+  }
+}
+
+function calculateDailySummary(dataList, selectedDate) {
+  if (!dataList || dataList.length === 0) return null;
+
+  let totalTemp = 0, totalHumidity = 0, totalPressure = 0;
+  let minTemp = Infinity, maxTemp = -Infinity;
+  let count = 0, descriptions = new Set();
+
+  dataList.forEach(item => {
+    const itemDate = new Date(item.dt * 1000);
+    if (itemDate.toDateString() === selectedDate.toDateString()) {
+      totalTemp += item.main.temp;
+      totalHumidity += item.main.humidity;
+      totalPressure += item.main.pressure;
+      minTemp = Math.min(minTemp, item.main.temp);
+      maxTemp = Math.max(maxTemp, item.main.temp);
+      descriptions.add(item.weather[0].description);
+      count++;
+    }
+  });
+
+  if (count === 0) return null;
+
+  return {
+    avgTemp: totalTemp / count,
+    minTemp: minTemp,
+    maxTemp: maxTemp,
+    avgHumidity: totalHumidity / count,
+    avgPressure: totalPressure / count,
+    descriptions: descriptions
+  };
 }
 
 // Calendario<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -227,6 +316,7 @@ languageSelect.innerHTML = `
 <option value="en">English</option>
 <option value="es">Español</option>
 `;
+languageSelect.disabled = true;
 settingsMenu.appendChild(languageSelect);
 
 tempUnitSelect.addEventListener('change', () => {

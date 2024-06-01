@@ -234,6 +234,7 @@ languageSelect.innerHTML = `
   <option value="en">English</option>
   <option value="es">Español</option>
 `;
+languageSelect.disabled = true;
 settingsMenu.appendChild(languageSelect);
 
 tempUnitSelect.addEventListener('change', () => {
